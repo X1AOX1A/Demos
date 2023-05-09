@@ -1,6 +1,8 @@
 import torch
+import string
 import numpy as np
 from PIL import Image
+from typing import List
 from torchvision import transforms
 from fairseq import utils, tasks
 from fairseq import checkpoint_utils
@@ -11,8 +13,8 @@ sys.path.append('/root/Documents/DEMOS/OFA')
 from tasks.mm_tasks.caption import CaptionTask
 
 
-# Construct input for caption task
-def construct_sample(image: Image, task):
+# Construct input for constrainted caption task
+def construct_sample(image: Image, constraints_list: List[List[str]], task):
     bos_item = torch.LongTensor([task.src_dict.bos()])
     eos_item = torch.LongTensor([task.src_dict.eos()])
     pad_idx = task.src_dict.pad()
@@ -32,22 +34,40 @@ def construct_sample(image: Image, task):
             s = torch.cat([s, eos_item])
         return s
     
-    # Image transform
-    mean = [0.5, 0.5, 0.5]
-    std = [0.5, 0.5, 0.5]
-    patch_resize_transform = transforms.Compose(
-        [
-            lambda image: image.convert("RGB"),
-            transforms.Resize((cfg.task.patch_image_size, cfg.task.patch_image_size), interpolation=Image.BICUBIC),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=mean, std=std),
+    # Constraints preprocess
+    def encode_constraints(constraints_list: List[List[str]]):
+        constraints_list = [[task.bpe.encode(c) for c in constraint] for constraint in constraints_list]
+        constraints_list = [[task.tgt_dict.encode_line(
+            constraint, 
+            append_eos=False,
+            add_if_not_exist=False
+            )
+            for constraint in constraints]
+            for constraints in constraints_list
         ]
-    )
+        from fairseq.token_generation_constraints import pack_constraints
+        constraints_tensor = pack_constraints(constraints_list)
+        return constraints_tensor
+
+    # Image transform
+    def encode_image(image):
+        mean = [0.5, 0.5, 0.5]
+        std = [0.5, 0.5, 0.5]
+        patch_resize_transform = transforms.Compose(
+            [
+                lambda image: image.convert("RGB"),
+                transforms.Resize((cfg.task.patch_image_size, cfg.task.patch_image_size), interpolation=Image.BICUBIC),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=mean, std=std),
+            ]
+        )
+        return patch_resize_transform(image)
     
-    patch_image = patch_resize_transform(image).unsqueeze(0)
+    constraints_tensor = encode_constraints(constraints_list)
+    patch_image = encode_image(image).unsqueeze(0)
     patch_mask = torch.tensor([True])
     src_text = encode_text(" what does the image describe?", append_bos=True, append_eos=True).unsqueeze(0)
-    src_length = torch.LongTensor([s.ne(pad_idx).long().sum() for s in src_text])
+    src_length = torch.LongTensor([s.ne(pad_idx).long().sum() for s in src_text])    
     sample = {
         "id":np.array(['42']),
         "net_input": {
@@ -57,13 +77,24 @@ def construct_sample(image: Image, task):
             "patch_masks": patch_mask
         }
     }
-    return sample
+    return sample, constraints_tensor
   
 # Function to turn FP32 to FP16
 def apply_half(t):
     if t.dtype is torch.float32:
         return t.to(dtype=torch.half)
     return t
+
+
+from utils.eval_utils import decode_fn
+def eval_constrainted_caption(task, generator, models, sample, **kwargs):
+    transtab = str.maketrans({key: None for key in string.punctuation})
+    hypos = task.inference_step(generator, models, sample, **kwargs)
+    results = []
+    for i, sample_id in enumerate(sample["id"].tolist()):
+        detok_hypo_str = decode_fn(hypos[i][0]["tokens"], task.tgt_dict, task.bpe, generator)
+        results.append({"image_id": str(sample_id), "caption": detok_hypo_str.translate(transtab).strip()})
+    return results, None
 
 
 if __name__ == "__main__":
@@ -85,8 +116,8 @@ if __name__ == "__main__":
         "max_len_b": 16, 
         "no_repeat_ngram_size": 3, 
         "seed": 7,
-        "scst_args": '{"constraints": "unordered"}',
-        "generation": {"constraints": "unordered"}
+        "scst_args": '{"constraints": "ordered"}',
+        "generation": {"constraints": "ordered"}
         }
     
     # task -> OFA/tasks/mm_tasks/caption.py/CaptionTask
@@ -111,40 +142,18 @@ if __name__ == "__main__":
     generator = task.build_generator(models, cfg.generation)
 
     image = Image.open(IMAGE_PATH)
+    constraints_list = [["bed", "quilt"]]
 
-    sample = construct_sample(image, task)
+    sample, constraints = construct_sample(image, constraints_list, task)
     sample = utils.move_to_cuda(sample) if use_cuda else sample
     sample = utils.apply_to_sample(apply_half, sample) if use_fp16 else sample
-
-    tokenizer = task.build_tokenizer(cfg.tokenizer)
-    bpe = task.build_bpe(cfg.bpe)
-
-    def encode_fn(x):
-        if tokenizer is not None:
-            x = tokenizer.encode(x)
-        if bpe is not None:
-            x = bpe.encode(x)
-        return x
-
-    # Construct constraints
-    constraints_list = [["bed", "quilt"]]
-    constraints_list = [[task.bpe.encode(c) for c in constraint] for constraint in constraints_list]
-    constraints_list = [[task.tgt_dict.encode_line(
-        constraint, 
-        append_eos=False,
-        add_if_not_exist=False
-        )
-        for constraint in constraints]
-        for constraints in constraints_list
-    ]
-    from fairseq.token_generation_constraints import pack_constraints, unpack_constraints
-    constraints_tensor = pack_constraints(constraints_list)
+    constraints = constraints.cuda() if use_cuda else constraints
+    
 
     # Run eval step for caption
-    from utils.eval_utils import eval_caption
     with torch.no_grad():
-        from torch import tensor
-        result, scores = eval_caption(task, generator, models, sample, constraints=constraints_tensor)
+        result, scores = eval_constrainted_caption(
+            task, generator, models, sample, constraints=constraints)
 
     print('Caption: {}'.format(result[0]['caption']))
     # Caption: a kitten laying on top of a wooden tablebedquilt
