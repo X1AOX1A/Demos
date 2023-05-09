@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 from PIL import Image
+from typing import List
 from torchvision import transforms
 from fairseq import utils, tasks
 from fairseq import checkpoint_utils
@@ -30,20 +31,22 @@ def construct_sample(image: Image, task):
         if append_eos:
             s = torch.cat([s, eos_item])
         return s
-    
+
     # Image transform
-    mean = [0.5, 0.5, 0.5]
-    std = [0.5, 0.5, 0.5]
-    patch_resize_transform = transforms.Compose(
-        [
-            lambda image: image.convert("RGB"),
-            transforms.Resize((cfg.task.patch_image_size, cfg.task.patch_image_size), interpolation=Image.BICUBIC),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=mean, std=std),
-        ]
-    )
+    def encode_image(image):
+        mean = [0.5, 0.5, 0.5]
+        std = [0.5, 0.5, 0.5]
+        patch_resize_transform = transforms.Compose(
+            [
+                lambda image: image.convert("RGB"),
+                transforms.Resize((cfg.task.patch_image_size, cfg.task.patch_image_size), interpolation=Image.BICUBIC),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=mean, std=std),
+            ]
+        )
+        return patch_resize_transform(image)
     
-    patch_image = patch_resize_transform(image).unsqueeze(0)
+    patch_image = encode_image(image).unsqueeze(0)
     patch_mask = torch.tensor([True])
     src_text = encode_text(" what does the image describe?", append_bos=True, append_eos=True).unsqueeze(0)
     src_length = torch.LongTensor([s.ne(pad_idx).long().sum() for s in src_text])
