@@ -6,7 +6,6 @@ from typing import List
 from torchvision import transforms
 from fairseq import utils, tasks
 from fairseq import checkpoint_utils
-import sacremoses
 
 import sys
 sys.path.append('/root/Documents/DEMOS/OFA')
@@ -36,16 +35,16 @@ def construct_sample(image: Image, constraints_list: List[List[str]], task):
     
     # Constraints preprocess
     def encode_constraints(constraints_list: List[List[str]]):
-        constraints_list = [[task.bpe.encode(c) for c in constraint] for constraint in constraints_list]
         constraints_list = [[task.tgt_dict.encode_line(
-            constraint, 
+            task.bpe.encode(constraint), 
+            add_if_not_exist=False,
             append_eos=False,
-            add_if_not_exist=False
             )
             for constraint in constraints]
             for constraints in constraints_list
         ]
         from fairseq.token_generation_constraints import pack_constraints
+        # Add `eos` at begin and `bos` at the end
         constraints_tensor = pack_constraints(constraints_list)
         return constraints_tensor
 
@@ -71,10 +70,10 @@ def construct_sample(image: Image, constraints_list: List[List[str]], task):
     sample = {
         "id":np.array(['42']),
         "net_input": {
-            "src_tokens": src_text,
-            "src_lengths": src_length,
-            "patch_images": patch_image,
-            "patch_masks": patch_mask
+            "src_tokens": src_text,         # tensor.Size([1, 8])
+            "src_lengths": src_length,      # tensor.Size([1])
+            "patch_images": patch_image,    # tensor.Size([1, 3, 480, 480])
+            "patch_masks": patch_mask       # tensor.Size([1])
         }
     }
     return sample, constraints_tensor
@@ -142,7 +141,8 @@ if __name__ == "__main__":
     generator = task.build_generator(models, cfg.generation)
 
     image = Image.open(IMAGE_PATH)
-    constraints_list = [["bed", "quilt"]]
+    # Note: need to add a blank before the constraint
+    constraints_list = [[" cute", " cat"]]
 
     sample, constraints = construct_sample(image, constraints_list, task)
     sample = utils.move_to_cuda(sample) if use_cuda else sample
@@ -156,4 +156,4 @@ if __name__ == "__main__":
             task, generator, models, sample, constraints=constraints)
 
     print('Caption: {}'.format(result[0]['caption']))
-    # Caption: a kitten laying on top of a wooden tablebedquilt
+    # Caption: a cute cat laying on top of a wooden table
