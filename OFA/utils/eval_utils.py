@@ -47,7 +47,7 @@ def _calculate_error_rate(hyps, refs):
 
 def eval_caption(task, generator, models, sample, **kwargs):
     transtab = str.maketrans({key: None for key in string.punctuation})
-    hypos = task.inference_step(generator, models, sample, **kwargs)
+    hypos = task.inference_step(generator, models, sample)
     results = []
     for i, sample_id in enumerate(sample["id"].tolist()):
         detok_hypo_str = decode_fn(hypos[i][0]["tokens"], task.tgt_dict, task.bpe, generator)
