@@ -38,7 +38,7 @@ device = torch.device("cuda") if torch.cuda.is_available() else "cpu"
 raw_image = Image.open("../../docs/_static/Confusing-Pictures.jpg").convert("RGB")
 display(raw_image.resize((596, 437)))
 ```
-<img src="../../docs/_static/Confusing-Pictures.jpg" width="350">
+<img src="https://github.com/salesforce/LAVIS/raw/main/docs/_static/Confusing-Pictures.jpg" width="350">
 
 Then we load a InstructBLIP model with its preprocessors (transforms).
 ```python
