@@ -2,7 +2,7 @@
 This is the official implementation of InstructBLIP [paper](http://arxiv.org/abs/2305.06500). 
 InstructBLIP proposes a new vision-language instruction-tuning framework using BLIP-2 models, achieving state-of-the-art zero-shot generalization performance on a wide range of vision-language tasks.
 
-<img src="showcase.png" width="1000">
+<img src="https://github.com/salesforce/LAVIS/raw/main/projects/instructblip/showcase.png" width="1000">
 
 ### Install from source:
 ```
@@ -92,7 +92,7 @@ In order to train the model with instruction data, prepare the dataset where eac
 The response from InstructBLIP is more comprehensive than GPT-4, more visually-grounded than LLaVA, and more logical than MiniGPT-4. The responses of GPT-4 and LLaVA
 are obtained from their respective papers, while the official demo is used for MiniGPT-4.
 
-<img src="comparison.png" width="600">
+<img src="https://github.com/salesforce/LAVIS/raw/main/projects/instructblip/comparison.png" width="600">
 
 ### BibTeX
 ```
