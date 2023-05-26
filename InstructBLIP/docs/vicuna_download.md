@@ -55,14 +55,14 @@
 
     ```shell
     /root/Documents/MODELS/LLaMA
+    ├── 7B
+    │   ├── checklist.chk
+    │   ├── consolidated.00.pth
+    │   └── params.json
     ├── 13B
     │   ├── checklist.chk
     │   ├── consolidated.00.pth
     │   ├── consolidated.01.pth
-    │   └── params.json
-    ├── 7B
-    │   ├── checklist.chk
-    │   ├── consolidated.00.pth
     │   └── params.json
     ├── tokenizer_checklist.chk
     └── tokenizer.model
