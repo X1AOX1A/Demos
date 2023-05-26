@@ -88,6 +88,20 @@
         --output_dir /root/Documents/MODELS/LLaMA-HF/13B
     ```
 
+- The converted files are organized as follows:
+
+    ```shell
+    /root/Documents/MODELS/LLaMA-HF
+    ├── 7B
+    │   ├── config.json
+    │   ├── pytorch_model.bin
+    │   └── tokenizer.json
+    └── 13B
+        ├── config.json
+        ├── pytorch_model.bin
+        └── tokenizer.json
+    ```
+
 ## 3. Get Vicuna weights by applying delta to LLaMA weights
 
 - We release Vicuna weights as delta weights to comply with the LLaMA model license. You can add our delta to the original LLaMA weights to obtain the Vicuna weights. 
@@ -114,4 +128,18 @@
         --base-model-path /root/Documents/MODELS/LLaMA-HF/13B \
         --target-model-path /root/Documents/MODELS/Vicuna/13B \
         --delta-path lmsys/vicuna-13b-delta-v1.1
+    ```
+
+- The Vicuna weights are organized as follows:
+
+    ```shell
+    /root/Documents/MODELS/Vicuna
+    ├── 7B
+    │   ├── config.json
+    │   ├── pytorch_model.bin
+    │   └── tokenizer.json
+    └── 13B
+        ├── config.json
+        ├── pytorch_model.bin
+        └── tokenizer.json
     ```
