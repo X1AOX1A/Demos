@@ -14,42 +14,11 @@
     magnet:?xt=urn:btih:ZXXDAUWYLRUXXBHUYEMS6Q5CE5WA3LVA&dn=LLaMA
     ```
 
-- or, use [pyllama](https://github.com/juncongmoo/pyllama)
+- or, use `download_llama_community.sh` from [pyllama](https://github.com/juncongmoo/pyllama) (**Preferred**)
 
     ```shell
-    pip install pyllama -U
-    python -m llama.download \
-        --model_size 7B,13B \
-        --folder /root/Documents/MODELS/LLaMA
+    bash download_llama_community.sh "7B,13B" "/root/Documents/MODELS/LLaMA"
     ```
-
-    - output:
-
-        ```shell
-        Downloading tokenizer...
-        ✅ /root/Documents/MODELS/LLaMA/tokenizer.model
-        ✅ /root/Documents/MODELS/LLaMA/tokenizer_checklist.chk
-        tokenizer.model: OK
-        Downloading 7B
-        downloading file to /root/Documents/MODELS/LLaMA/7B/consolidated.00.pth ...please wait for a few minutes ...
-        ✅ /root/Documents/MODELS/LLaMA/7B/consolidated.00.pth
-        ✅ /root/Documents/MODELS/LLaMA/7B/params.json
-        ✅ /root/Documents/MODELS/LLaMA/7B/checklist.chk
-        Checking checksums
-        consolidated.00.pth: FAILED
-        params.json: OK
-        Downloading 13B
-        downloading file to /root/Documents/MODELS/LLaMA/13B/consolidated.00.pth ...please wait for a few minutes ...
-        ✅ /root/Documents/MODELS/LLaMA/13B/consolidated.00.pth
-        downloading file to /root/Documents/MODELS/LLaMA/13B/consolidated.01.pth ...please wait for a few minutes ...
-        ✅ /root/Documents/MODELS/LLaMA/13B/consolidated.01.pth
-        ✅ /root/Documents/MODELS/LLaMA/13B/params.json
-        ✅ /root/Documents/MODELS/LLaMA/13B/checklist.chk
-        Checking checksums
-        consolidated.00.pth: FAILED
-        consolidated.01.pth: OK
-        params.json: OK
-        ```
 
 - The downloaded files are organized as follows:
 
