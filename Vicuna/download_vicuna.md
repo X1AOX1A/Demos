@@ -1,6 +1,15 @@
 
 # Prepare Vicuna Weights
 
+Replace the directories in the following commands with the appropriate paths.
+
+```shell
+export PATH_TO_LLAMA="/root/Documents/MODELS/LLaMA"
+export PATH_TO_LLAMA_HF="/root/Documents/MODELS/LLaMA-HF"
+export PATH_TO_VICUNA="/root/Documents/MODELS/Vicuna"
+```
+
+
 ## 1. Obtain LLaMA weights
 
 - Weights for the LLaMA models can be obtained from by filling out [this form](https://docs.google.com/forms/d/e/1FAIpQLSfqNECQnMkycAp2jP4Z9TFX0cGR4uf7b_fBxjY_OjhJILlKGA/viewform?usp=send_form)
@@ -10,20 +19,20 @@
     ```shell
     sudo apt-get install transmission-cli
     transmission-cli \
-    --download-dir /root/Documents/MODELS/LLaMA \
+    --download-dir $PATH_TO_LLAMA \
     magnet:?xt=urn:btih:ZXXDAUWYLRUXXBHUYEMS6Q5CE5WA3LVA&dn=LLaMA
     ```
 
 - or, use `download_llama_community.sh` from [pyllama](https://github.com/juncongmoo/pyllama) (**Preferred**)
 
     ```shell
-    bash ./download_llama_community.sh "7B,13B" "/root/Documents/MODELS/LLaMA"
+    bash ./download_llama_community.sh "7B,13B" $PATH_TO_LLAMA
     ```
 
 - The downloaded files are organized as follows:
 
     ```shell
-    /root/Documents/MODELS/LLaMA
+    PATH_TO_LLAMA
     ├── 7B
     │   ├── checklist.chk
     │   ├── consolidated.00.pth
@@ -48,19 +57,20 @@
     # For LLaMA-7B
     python /root/anaconda3/envs/Vicuna/lib/python3.8/site-packages/transformers/models/llama/convert_llama_weights_to_hf.py \
         --model_size 7B \
-        --input_dir /root/Documents/MODELS/LLaMA \
-        --output_dir /root/Documents/MODELS/LLaMA-HF/7B
+        --input_dir $PATH_TO_LLAMA \
+        --output_dir $PATH_TO_LLAMA_HF/7B
 
+    # For LLaMA-13B
     python /root/anaconda3/envs/Vicuna/lib/python3.8/site-packages/transformers/models/llama/convert_llama_weights_to_hf.py \
         --model_size 13B \
-        --input_dir /root/Documents/MODELS/LLaMA \
-        --output_dir /root/Documents/MODELS/LLaMA-HF/13B
+        --input_dir $PATH_TO_LLAMA \
+        --output_dir $PATH_TO_LLAMA_HF/13B
     ```
 
 - The converted files are organized as follows:
 
     ```shell
-    /root/Documents/MODELS/LLaMA-HF
+    PATH_TO_LLAMA_HF
     ├── 7B
     │   ├── config.json
     │   ├── pytorch_model.bin
@@ -88,21 +98,21 @@
     # Get Vicuna weights by applying delta to LLaMA weights
     # For Vicuna-7B
     python3 -m fastchat.model.apply_delta \
-        --base-model-path /root/Documents/MODELS/LLaMA-HF/7B \
-        --target-model-path /root/Documents/MODELS/Vicuna/7B \
+        --base-model-path $PATH_TO_LLAMA_HF/7B \
+        --target-model-path $PATH_TO_VICUNA/7B \
         --delta-path lmsys/vicuna-7b-delta-v1.1
 
     # For Vicuna-13B
     python3 -m fastchat.model.apply_delta \
-        --base-model-path /root/Documents/MODELS/LLaMA-HF/13B \
-        --target-model-path /root/Documents/MODELS/Vicuna/13B \
+        --base-model-path $PATH_TO_LLAMA_HF/13B \
+        --target-model-path $PATH_TO_VICUNA/13B \
         --delta-path lmsys/vicuna-13b-delta-v1.1
     ```
 
 - The Vicuna weights are organized as follows:
 
     ```shell
-    /root/Documents/MODELS/Vicuna
+    PATH_TO_VICUNA
     ├── 7B
     │   ├── config.json
     │   ├── pytorch_model.bin
