@@ -17,7 +17,7 @@
 - or, use `download_llama_community.sh` from [pyllama](https://github.com/juncongmoo/pyllama) (**Preferred**)
 
     ```shell
-    bash download_llama_community.sh "7B,13B" "/root/Documents/MODELS/LLaMA"
+    bash ./download_llama_community.sh "7B,13B" "/root/Documents/MODELS/LLaMA"
     ```
 
 - The downloaded files are organized as follows:
