@@ -9,6 +9,23 @@ export PATH_TO_LLAMA_HF="/root/Documents/MODELS/LLaMA-HF"
 export PATH_TO_VICUNA="/root/Documents/MODELS/Vicuna"
 ```
 
+## 0. Install dependencies
+
+```shell
+# Optional, Create a new conda environment
+# functools.cache requires python>=3.9
+conda create -n Vicuna python=3.9
+conda activate Vicuna
+
+# Install fastchat to get Vicuna weights
+# Vicuna weight V1.1 are only compatible with transformers>=4.28.0 and fschat >= 0.2.0
+pip install --upgrade fschat
+
+## Or, install from source
+# git clone https://github.com/lm-sys/FastChat.git
+# cd FastChat
+# pip3 install -e .
+```
 
 ## 1. Obtain LLaMA weights
 
@@ -33,17 +50,17 @@ export PATH_TO_VICUNA="/root/Documents/MODELS/Vicuna"
 
     ```shell
     PATH_TO_LLAMA
-    ├── 7B
-    │   ├── checklist.chk
-    │   ├── consolidated.00.pth
-    │   └── params.json
-    ├── 13B
-    │   ├── checklist.chk
-    │   ├── consolidated.00.pth
-    │   ├── consolidated.01.pth
-    │   └── params.json
-    ├── tokenizer_checklist.chk
-    └── tokenizer.model
+    |-- [ 120]  13B
+    |   |-- [ 154]  checklist.chk
+    |   |-- [ 12G]  consolidated.00.pth
+    |   |-- [ 12G]  consolidated.01.pth
+    |   `-- [ 101]  params.json
+    |-- [  89]  7B
+    |   |-- [ 100]  checklist.chk
+    |   |-- [ 13G]  consolidated.00.pth
+    |   `-- [ 101]  params.json
+    |-- [488K]  tokenizer.model
+    `-- [  50]  tokenizer_checklist.chk
     ```
 
 ## 2. Convert LLaMA weights to HuggingFace format
@@ -55,13 +72,13 @@ export PATH_TO_VICUNA="/root/Documents/MODELS/Vicuna"
     ```shell
     # Convert LLaMA weights to HuggingFace format
     # For LLaMA-7B
-    python /root/anaconda3/envs/Vicuna/lib/python3.8/site-packages/transformers/models/llama/convert_llama_weights_to_hf.py \
+    python -m transformers.models.llama.convert_llama_weights_to_hf \
         --model_size 7B \
         --input_dir $PATH_TO_LLAMA \
         --output_dir $PATH_TO_LLAMA_HF/7B
 
     # For LLaMA-13B
-    python /root/anaconda3/envs/Vicuna/lib/python3.8/site-packages/transformers/models/llama/convert_llama_weights_to_hf.py \
+    python -m transformers.models.llama.convert_llama_weights_to_hf \
         --model_size 13B \
         --input_dir $PATH_TO_LLAMA \
         --output_dir $PATH_TO_LLAMA_HF/13B
@@ -71,14 +88,27 @@ export PATH_TO_VICUNA="/root/Documents/MODELS/Vicuna"
 
     ```shell
     PATH_TO_LLAMA_HF
-    ├── 7B
-    │   ├── config.json
-    │   ├── pytorch_model.bin
-    │   └── tokenizer.json
-    └── 13B
-        ├── config.json
-        ├── pytorch_model.bin
-        └── tokenizer.json
+    |-- [4.0K]  13B
+    |   |-- [ 502]  config.json
+    |   |-- [ 132]  generation_config.json
+    |   |-- [9.3G]  pytorch_model-00001-of-00003.bin
+    |   |-- [9.2G]  pytorch_model-00002-of-00003.bin
+    |   |-- [6.1G]  pytorch_model-00003-of-00003.bin
+    |   |-- [ 33K]  pytorch_model.bin.index.json
+    |   |-- [ 411]  special_tokens_map.json
+    |   |-- [1.8M]  tokenizer.json
+    |   |-- [488K]  tokenizer.model
+    |   `-- [ 727]  tokenizer_config.json
+    `-- [ 316]  7B
+        |-- [ 502]  config.json
+        |-- [ 132]  generation_config.json
+        |-- [9.3G]  pytorch_model-00001-of-00002.bin
+        |-- [3.3G]  pytorch_model-00002-of-00002.bin
+        |-- [ 26K]  pytorch_model.bin.index.json
+        |-- [ 411]  special_tokens_map.json
+        |-- [1.8M]  tokenizer.json
+        |-- [488K]  tokenizer.model
+        `-- [ 727]  tokenizer_config.json
     ```
 
 ## 3. Get Vicuna weights by applying delta to LLaMA weights
@@ -88,22 +118,15 @@ export PATH_TO_VICUNA="/root/Documents/MODELS/Vicuna"
 - [Reference](https://github.com/lm-sys/FastChat#vicuna-weights)
 
     ```shell
-    # Optional, Create a new conda environment
-    conda create -n Vicuna python=3.8
-    conda activate Vicuna
-
-    # Install fastchat to get Vicuna weights
-    pip3 install fschat
-
     # Get Vicuna weights by applying delta to LLaMA weights
     # For Vicuna-7B
-    python3 -m fastchat.model.apply_delta \
+    python -m fastchat.model.apply_delta \
         --base-model-path $PATH_TO_LLAMA_HF/7B \
         --target-model-path $PATH_TO_VICUNA/7B \
         --delta-path lmsys/vicuna-7b-delta-v1.1
 
     # For Vicuna-13B
-    python3 -m fastchat.model.apply_delta \
+    python -m fastchat.model.apply_delta \
         --base-model-path $PATH_TO_LLAMA_HF/13B \
         --target-model-path $PATH_TO_VICUNA/13B \
         --delta-path lmsys/vicuna-13b-delta-v1.1
@@ -113,12 +136,23 @@ export PATH_TO_VICUNA="/root/Documents/MODELS/Vicuna"
 
     ```shell
     PATH_TO_VICUNA
-    ├── 7B
-    │   ├── config.json
-    │   ├── pytorch_model.bin
-    │   └── tokenizer.json
-    └── 13B
-        ├── config.json
-        ├── pytorch_model.bin
-        └── tokenizer.json
+    |-- [ 334]  13B
+    |   |-- [ 560]  config.json
+    |   |-- [ 132]  generation_config.json
+    |   |-- [9.3G]  pytorch_model-00001-of-00003.bin
+    |   |-- [9.2G]  pytorch_model-00002-of-00003.bin
+    |   |-- [6.1G]  pytorch_model-00003-of-00003.bin
+    |   |-- [ 33K]  pytorch_model.bin.index.json
+    |   |-- [ 411]  special_tokens_map.json
+    |   |-- [488K]  tokenizer.model
+    |   `-- [ 727]  tokenizer_config.json
+    `-- [ 290]  7B
+        |-- [ 559]  config.json
+        |-- [ 132]  generation_config.json
+        |-- [9.3G]  pytorch_model-00001-of-00002.bin
+        |-- [3.3G]  pytorch_model-00002-of-00002.bin
+        |-- [ 26K]  pytorch_model.bin.index.json
+        |-- [ 411]  special_tokens_map.json
+        |-- [488K]  tokenizer.model
+        `-- [ 727]  tokenizer_config.json
     ```
