@@ -1,9 +1,6 @@
 # Enviornment Setup
 
 ```shell
-# Ref: https://github.com/salesforce/LAVIS/tree/main#installation
-
-# Optional, Create a new conda environment
 conda create -n lavis python=3.8
 conda activate lavis
 
