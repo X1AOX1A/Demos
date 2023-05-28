@@ -1,2 +1,0 @@
-cd /root/Documents/DEMOS/LAVIS
-nohup python -m torch.distributed.run --nproc_per_node=4 train.py --cfg-path lavis/projects/blip2/train/caption_coco_ft.yaml >/root/Documents/DEMOS/InstructBLIP/finetune/BLIP_2_train_caption_coco.log& 2>&1
