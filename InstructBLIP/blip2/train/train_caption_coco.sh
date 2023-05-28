@@ -1,2 +1,3 @@
 cd /root/Documents/DEMOS/LAVIS
-nohup python -m torch.distributed.run --nproc_per_node=4 train.py --cfg-path /root/Documents/DEMOS/InstructBLIP/blip2/train/pretrain_stage1.yaml >/root/Documents/DEMOS/InstructBLIP/blip2/train/train_caption_coco.log& 2>&1
+nohup /root/anaconda3/envs/lavis/bin/python -m torch.distributed.run --nproc_per_node=4 train.py --cfg-path /root/Documents/DEMOS/InstructBLIP/blip2/train/caption_coco_ft.yaml >/root/Documents/DEMOS/InstructBLIP/blip2/train/train_caption_coco.log& 2>&1
+tail -f /root/Documents/DEMOS/InstructBLIP/blip2/train/train_caption_coco.log

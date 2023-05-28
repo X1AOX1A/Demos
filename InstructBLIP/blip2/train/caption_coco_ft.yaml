@@ -25,9 +25,9 @@ datasets:
          prompt: "a photo of "
        eval:
          name: "blip_caption"
-   # build_info:
-   images:
-       storage: '/root/Documents/DATASETS/MS_COCO/images/'
+   build_info:
+        images:
+            storage: '/root/Documents/DATASETS/MS_COCO/images/'
 
 run:
  task: captioning
