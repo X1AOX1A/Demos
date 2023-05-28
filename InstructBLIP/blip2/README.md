@@ -6,4 +6,4 @@
 shell train//train_caption_coco.sh
 ```
 
-- It may take 3 hours on 4 40GB V100 GPUs.
+- It may take 3 hours on 4 40GB A100 GPUs.
