@@ -17,4 +17,5 @@ if __name__ == "__main__":
     model, vis_processors, _ = load_model_and_preprocess(name="blip2_vicuna_instruct", model_type="vicuna7b", is_eval=True, device=device)
     # prepare the image
     image = vis_processors["eval"](raw_image).unsqueeze(0).to(device)
-    model.generate({"image": image, "prompt": "Write a detailed description."})
+    print(model.generate({"image": image, "prompt": "Write a detailed description."}))
+    # "The image depicts a small cat sitting underneath a wooden bed frame, peeking out from behind it. The cat appears to be curious and interested in what's happening around it. There are two other cats in the scene, one on the left side of the image and the other on the right side. Both cats seem to be relaxing and enjoying their surroundings. In addition to the cats, there is a person visible in the background, possibly taking care of them or interacting with them."
