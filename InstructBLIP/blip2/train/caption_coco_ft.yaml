@@ -19,17 +19,17 @@ datasets:
   coco_caption: # name of the dataset builder
     vis_processor:
         train:
-          name: "blip2_image_train"
+          name: "blip2_image_train" # /lavis/processors/blip_processors.py line 197
           image_size: 364
         eval:
-          name: "blip_image_eval"
+          name: "blip_image_eval"   # /lavis/processors/blip_processors.py line 166
           image_size: 364
     text_processor:
         train:
-          name: "blip_caption"
+          name: "blip_caption"      # /lavis/processors/blip_processors.py line 28
           prompt: "a photo of "
         eval:
-          name: "blip_caption"
+          name: "blip_caption"      # /lavis/processors/blip_processors.py line 28
     build_info:
         images:
             storage: '/root/Documents/DATASETS/MS_COCO/images/'
