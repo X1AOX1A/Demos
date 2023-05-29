@@ -22,7 +22,7 @@ datasets:
     vis_processor:
         eval:
           name: "blip_image_eval"
-          image_size: 364
+          image_size: 224
     text_processor:
         eval:
           name: "blip_caption"
