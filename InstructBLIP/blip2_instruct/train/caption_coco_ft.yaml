@@ -11,35 +11,37 @@ model:
   model_type: vicuna7b        
   load_finetuned: False
   use_grad_checkpoint: True
-  freeze_vit: False
+  freeze_vit: True
 
 datasets:
   # /lavis/datasets/builders/caption_builder.py line22
   # -> /lavis/datasets/datasets/coco_caption_datasets.py
-  coco_caption: # name of the dataset builder
+  coco_caption_extend: # name of the dataset builder
     vis_processor:
         train:
-          name: "blip2_image_train"
+          name: "blip2_image_train" # /lavis/processors/blip_processors.py line 197
           image_size: 224
         eval:
-          name: "blip_image_eval"
+          name: "blip_image_eval"   # /lavis/processors/blip_processors.py line 166
           image_size: 224
     text_processor:
         train:
-          name: "blip_caption"
-          prompt: "a photo of "
+          name: "blip_caption"      # /lavis/processors/blip_processors.py line 28
+          prompt: "a photo of " # TODO: how prompt feed into the model
         eval:
-          name: "blip_caption"
+          name: "blip_caption"      # /lavis/processors/blip_processors.py line 28
+    dataset_card: dataset_card/coco_caption.md
+    data_type: images # [images|videos|features]
     build_info:
         images:
             storage: '/root/Documents/DATASETS/MS_COCO/images/'
         annotations:
             train:
-                storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json'
+              storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json'
             val:
-                storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json'
+              storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json'
             test:
-                storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json'
+              storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json'
 
 run:
   task: captioning
