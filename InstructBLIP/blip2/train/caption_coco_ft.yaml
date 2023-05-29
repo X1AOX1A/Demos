@@ -4,14 +4,16 @@
 # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 
 model:
- arch: blip2_opt
- model_type: caption_coco_opt2.7b
- load_finetuned: False
- use_grad_checkpoint: True
- freeze_vit: False
+  arch: blip2_opt                   # lavis/models/blip2_models/blip2_opt.py
+  model_type: caption_coco_opt2.7b  # lavis/models/blip2_models/blip2_opt.py line26
+  load_finetuned: False
+  use_grad_checkpoint: True
+  freeze_vit: False
 
 datasets:
- coco_caption: # name of the dataset builder
+  # /lavis/datasets/builders/caption_builder.py line22
+  # -> /lavis/datasets/datasets/coco_caption_datasets.py
+  coco_caption: # name of the dataset builder
     vis_processor:
         train:
           name: "blip2_image_train"
@@ -26,40 +28,47 @@ datasets:
         eval:
           name: "blip_caption"
     build_info:
-          images:
-              storage: '/root/Documents/DATASETS/MS_COCO/images/'
+        images:
+            storage: '/root/Documents/DATASETS/MS_COCO/images/'
+        annotations:
+            train:
+                storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json'
+            val:
+                storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json'
+            test:
+                storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json'
 
 run:
- task: captioning
- # optimizer
- lr_sched: "linear_warmup_cosine_lr"
- init_lr: 1e-5
- min_lr: 0
- warmup_lr: 1e-8
- warmup_steps: 1000
- weight_decay: 0.05
- max_epoch: 5
- batch_size_train: 16
- batch_size_eval: 8
- num_workers: 4
- accum_grad_iters: 1
+  task: captioning
+  # optimizer
+  lr_sched: "linear_warmup_cosine_lr"
+  init_lr: 1e-5
+  min_lr: 0
+  warmup_lr: 1e-8
+  warmup_steps: 1000
+  weight_decay: 0.05
+  max_epoch: 5
+  batch_size_train: 16
+  batch_size_eval: 8
+  num_workers: 4
+  accum_grad_iters: 1
 
- max_len: 30
- min_len: 8
- num_beams: 5
+  max_len: 30
+  min_len: 8
+  num_beams: 5
 
- seed: 42
- output_dir: "/root/Documents/DEMOS/InstructBLIP/output/BLIP2/Caption_coco"
+  seed: 42
+  output_dir: "/root/Documents/DEMOS/InstructBLIP/output/BLIP2/Caption_coco"
 
- amp: True
- resume_ckpt_path: null
+  amp: True
+  resume_ckpt_path: null
 
- evaluate: False
- train_splits: ["train"]
- valid_splits: ["val"]
- test_splits: ["test"]
+  evaluate: False
+  train_splits: ["train"]
+  valid_splits: ["val"]
+  test_splits: ["test"]
 
- device: "cuda"
- world_size: 1
- dist_url: "env://"
- distributed: True
+  device: "cuda"
+  world_size: 1
+  dist_url: "env://"
+  distributed: True

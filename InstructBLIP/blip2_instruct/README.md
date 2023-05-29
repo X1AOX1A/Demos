@@ -1,5 +1,13 @@
 # InstructBLIP
 
+## Prepare COCO Caption
+
+- Ref to [Datasets-MS_COCO](https://github.com/X1AOX1A/Datasets/tree/main/MS_COCO)
+
+## Prepare Vicuna Weights
+
+- Ref to [Demos-Vicuna](https://github.com/X1AOX1A/Demos/tree/main/Vicuna)
+
 ## Image Caption Inference
 
 ```shell
