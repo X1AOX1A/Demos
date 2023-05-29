@@ -4,8 +4,11 @@
 # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 
 model:
-  arch: blip2_opt                   # lavis/models/blip2_models/blip2_opt.py
-  model_type: caption_coco_opt2.7b  # lavis/models/blip2_models/blip2_opt.py line26
+  # lavis/models/blip2_models/blip2_opt.py
+  arch: blip2_opt
+  # lavis/models/blip2_models/blip2_opt.py line26
+  # -> lavis/configs/models/blip2/blip2_caption_opt2.7b.yaml
+  model_type: caption_coco_opt2.7b
   load_finetuned: False
   use_grad_checkpoint: True
   freeze_vit: False
