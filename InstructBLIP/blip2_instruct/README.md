@@ -41,7 +41,9 @@ model:
   load_finetuned: False
 
   # vit encoder
-  image_size: 224
+  # InstructBLIP maintains the same image resolution (224×224) during instruction
+  # tuning and keeps the visual encoder frozen during ﬁnetuning.
+  image_size: 224               # follow blip2_instruct_vicuna7b.yaml (pre-train)
   use_grad_checkpoint: True
   vit_precision: "fp16"
   freeze_vit: True
@@ -51,14 +53,14 @@ datasets:
     vis_processor:
         train:
           name: "blip2_image_train"
-          image_size: 224
+          image_size: 224       # follow blip2_instruct_vicuna7b.yaml (pre-train)
         eval:
           name: "blip_image_eval"
-          image_size: 224
+          image_size: 224       # follow blip2_instruct_vicuna7b.yaml (pre-train)
     text_processor:
         train:
           name: "blip_caption"
-          prompt: "a photo of "
+          prompt: "a photo of " # follow blip2_caption_coco_ft.yaml (fine-tune)
         eval:
           name: "blip_caption"
 ```
