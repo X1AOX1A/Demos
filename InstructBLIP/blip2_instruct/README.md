@@ -43,9 +43,9 @@ model:
   # vit encoder
   # InstructBLIP maintains the same image resolution (224×224) during instruction
   # tuning and keeps the visual encoder frozen during ﬁnetuning.
-  image_size: 224               # follow blip2_instruct_vicuna7b.yaml (pre-train)
+  image_size: 224               # follow paper setting for VQA fine-tuning
   use_grad_checkpoint: True
-  vit_precision: "fp16"
+  vit_precision: "fp16"         # follow blip2_instruct_vicuna7b.yaml (pre-train)
   freeze_vit: True
 
 datasets:
@@ -53,10 +53,10 @@ datasets:
     vis_processor:
         train:
           name: "blip2_image_train"
-          image_size: 224       # follow blip2_instruct_vicuna7b.yaml (pre-train)
+          image_size: 224       # follow paper setting for VQA fine-tuning
         eval:
           name: "blip_image_eval"
-          image_size: 224       # follow blip2_instruct_vicuna7b.yaml (pre-train)
+          image_size: 224       # follow paper setting for VQA fine-tuning
     text_processor:
         train:
           name: "blip_caption"
@@ -95,9 +95,11 @@ model:
   load_finetuned: False
 
   # vit encoder
-  image_size: 224
+  # InstructBLIP maintains the same image resolution (224×224) during instruction
+  # tuning and keeps the visual encoder frozen during ﬁnetuning.
+  image_size: 224               # follow paper setting for VQA fine-tuning
   use_grad_checkpoint: True
-  vit_precision: "fp16"
+  vit_precision: "fp16"         # follow blip2_instruct_vicuna7b.yaml (pre-train)
   freeze_vit: True
 
 datasets:
@@ -105,10 +107,10 @@ datasets:
     vis_processor:
         train:
           name: "blip2_image_train"
-          image_size: 224
+          image_size: 224       # follow paper setting for VQA fine-tuning
         eval:
           name: "blip_image_eval"
-          image_size: 224
+          image_size: 224       # follow paper setting for VQA fine-tuning
     text_processor:
         train:
           name: "blip_caption"
