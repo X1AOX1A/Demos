@@ -12,6 +12,31 @@ bash train/train_caption_coco.sh
 
 - It may take 15 hours on 4 40GB A100 GPUs.
 
+```shell
+model:
+  arch: blip2_opt
+  model_type: caption_coco_opt2.7b
+  load_finetuned: False
+  use_grad_checkpoint: True
+  freeze_vit: False
+
+datasets:
+  coco_caption: # name of the dataset builder
+    vis_processor:
+        train:
+          name: "blip2_image_train"
+          image_size: 364
+        eval:
+          name: "blip_image_eval"
+          image_size: 364
+    text_processor:
+        train:
+          name: "blip_caption"
+          prompt: "a photo of "
+        eval:
+          name: "blip_caption"
+```
+
 - results:
 
     ```shell
