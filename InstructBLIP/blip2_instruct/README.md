@@ -15,11 +15,13 @@ cd infer
 python image_caption.py
 ```
 
+![cat](./infer/cat.jpg)
+
 - output:
 
-    ```shell
-    ["The image depicts a small cat sitting underneath a wooden bed frame, peeking out from behind it. The cat appears to be curious and interested in what's happening around it. There are two other cats in the scene, one on the left side of the image and the other on the right side. Both cats seem to be relaxing and enjoying their surroundings. In addition to the cats, there is a person visible in the background, possibly taking care of them or interacting with them."]
-    ```
+    `["The image depicts a small cat sitting underneath a wooden bed frame, peeking out from behind it. The cat appears to be curious and interested in what's happening around it. There are two other cats in the scene, one on the left side of the image and the other on the right side. Both cats seem to be relaxing and enjoying their surroundings. In addition to the cats, there is a person visible in the background, possibly taking care of them or interacting with them."`]
+    
+    
 
 ## Finetune InstructBLIP on COCO Caption
 
@@ -27,9 +29,9 @@ python image_caption.py
 bash train/train_caption_coco.sh
 ```
 
-- It may take 5 hours on 4 40GB A100 GPUs.
+- It may take 5 hours on 4 40GB A100 GPUs (with frozen VIT).
 
-- output: (with bug)
+- results (with bug):
 
     ```shell
     {"test": 
@@ -44,4 +46,13 @@ bash train/train_caption_coco.sh
             "SPICE": 0.2477929364222591
         }
     }
+    ```
+- output examples:
+
+    ```shell
+    {"caption": "a photo of a man riding a motorcycle down a dirt road with a mountain in the background", "image_id": 391895}, 
+    {"caption": "a collection of wooden spoons, forks, and other kitchen utensils are lined up on a table", "image_id": 386164}, 
+    {"caption": "a group of people riding bicycles down a bike lane on a city street", "image_id": 462565}, 
+    {"caption": "a black and white photograph of a man riding a motorcycle on the road", "image_id": 559665}, 
+    {"caption": "a photo of bananas are piled high in a wooden crate at an outdoor market", "image_id": 579664}, 
     ```
