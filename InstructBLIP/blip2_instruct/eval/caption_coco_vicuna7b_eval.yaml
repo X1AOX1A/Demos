@@ -14,7 +14,7 @@
 
 model:
   arch: blip2_vicuna_instruct
-  model_type: caption_coco_vicuna7b # TBD
+  model_type: vicuna7b
   use_grad_checkpoint: False
 
 datasets:
