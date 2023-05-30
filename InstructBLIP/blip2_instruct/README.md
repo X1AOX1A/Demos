@@ -12,7 +12,7 @@
 
 ```shell
 cd infer
-python image_caption.py
+python image_caption.py # prompt: "Write a detailed description."
 ```
 <p align="center">
 <img src="infer/cat.jpg" alt="cat" style="width:50%;"> 
@@ -23,8 +23,9 @@ python image_caption.py
     `["The image depicts a small cat sitting underneath a wooden bed frame, peeking out from behind it. The cat appears to be curious and interested in what's happening around it. There are two other cats in the scene, one on the left side of the image and the other on the right side. Both cats seem to be relaxing and enjoying their surroundings. In addition to the cats, there is a person visible in the background, possibly taking care of them or interacting with them."]`
     
     
+## Zero-shot on COCO Caption
 
-## Finetune InstructBLIP on COCO Caption
+## Fine-tune on COCO Caption
 
 ```shell
 bash train/train_caption_coco.sh

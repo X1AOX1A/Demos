@@ -4,7 +4,11 @@
 
 - Ref to [Datasets-MS_COCO](https://github.com/X1AOX1A/Datasets/tree/main/MS_COCO)
 
-## Finetune BLIP2 on COCO Caption
+## Image Caption Inference
+
+## Zero-shot on COCO Caption
+
+## Fine-tune on COCO Caption
 
 ```shell
 bash train/train_caption_coco.sh
