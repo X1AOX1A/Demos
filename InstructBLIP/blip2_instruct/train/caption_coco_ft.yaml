@@ -27,7 +27,6 @@ datasets:
     text_processor:
         train:
           name: "blip_caption"      # /lavis/processors/blip_processors.py line 28
-          prompt: "a photo of " # TODO: how prompt feed into the model
         eval:
           name: "blip_caption"      # /lavis/processors/blip_processors.py line 28
     dataset_card: dataset_card/coco_caption.md
@@ -63,7 +62,7 @@ run:
   num_beams: 5
 
   seed: 42
-  output_dir: "/root/Documents/DEMOS/InstructBLIP/output/BLIP2_Instruct/Caption_coco"
+  output_dir: "/root/Documents/DEMOS/InstructBLIP/output/BLIP2_Instruct/Caption_coco"  
 
   amp: True
   resume_ckpt_path: null
