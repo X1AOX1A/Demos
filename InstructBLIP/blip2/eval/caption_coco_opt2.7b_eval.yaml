@@ -26,9 +26,16 @@ datasets:
     text_processor:
         eval:
           name: "blip_caption"
-#     build_info:
-#         images:
-#             storage: '/export/share/datasets/vision/coco/images/'
+    build_info:
+        images:
+            storage: '/root/Documents/DATASETS/MS_COCO/images/'
+        annotations:
+            train:
+                storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json'
+            val:
+                storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json'
+            test:
+                storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json'
 
 run:
   task: captioning
@@ -42,7 +49,7 @@ run:
   num_beams: 5
 
   seed: 42
-  output_dir: "output/BLIP2/Caption_coco_opt2.7b"
+  output_dir: "/root/Documents/DEMOS/InstructBLIP/output/BLIP2/Caption_coco"
 
   evaluate: True
   test_splits: ["test"]
