@@ -10,7 +10,13 @@ model:
   # -> lavis/configs/models/blip2/blip2_instruct_vicuna7b.yaml
   model_type: vicuna7b        
   load_finetuned: False
+
+  # vit encoder
+  # InstructBLIP maintains the same image resolution (224×224) during instruction
+  # tuning and keeps the visual encoder frozen during ﬁnetuning.
+  image_size: 224
   use_grad_checkpoint: True
+  vit_precision: "fp16"
   freeze_vit: True
 
 datasets:
