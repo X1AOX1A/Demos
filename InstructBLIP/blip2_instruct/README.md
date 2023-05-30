@@ -14,8 +14,9 @@
 cd infer
 python image_caption.py
 ```
-
-![cat](./infer/cat.jpg)
+<p align="center">
+<img src="infer/cat.jpg" alt="cat" style="width:50%;"> 
+</p>
 
 - output:
 
