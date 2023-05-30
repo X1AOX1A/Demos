@@ -163,7 +163,7 @@ datasets:
     {"caption": "a close up of a toy airplane sitting on the ground in a field", "image_id": 561100}, 
     ```
 
-### Config3
+### 3. Config3
 
 ```shell
 model:
@@ -176,6 +176,46 @@ model:
   use_grad_checkpoint: True
   vit_precision: "fp32"     # fp16 -> fp32, same as BLIP2-OPT
   freeze_vit: True
+
+datasets:
+  coco_caption_extend: # name of the dataset builder
+    vis_processor:
+        train:
+          name: "blip2_image_train"
+          image_size: 364   # 224 -> 364, same as BLIP2-OPT
+        eval:
+          name: "blip_image_eval"
+          image_size: 364   # 224 -> 364, same as BLIP2-OPT
+    text_processor:
+        train:
+          name: "blip_caption"
+        eval:
+          name: "blip_caption"
+```
+
+- results (id: ):
+
+    ```shell
+    ```
+
+- output examples (test_epochbest.json):
+
+    ```shell
+    ```
+
+### 4. Config4
+
+```shell
+model:
+  arch: blip2_vicuna_instruct
+  model_type: vicuna7b        
+  load_finetuned: False
+
+  # vit encoder
+  image_size: 364           # 224 -> 364, same as BLIP2-OPT
+  use_grad_checkpoint: True
+  vit_precision: "fp32"     # fp16 -> fp32, same as BLIP2-OPT
+  freeze_vit: False         # True -> False, same as BLIP2-OPT
 
 datasets:
   coco_caption_extend: # name of the dataset builder
