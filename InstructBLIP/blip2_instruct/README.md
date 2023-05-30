@@ -27,4 +27,21 @@ python image_caption.py
 bash train/train_caption_coco.sh
 ```
 
-- It may take 3 hours on 4 40GB A100 GPUs.
+- It may take 5 hours on 4 40GB A100 GPUs.
+
+- output: (with bug)
+
+    ```shell
+    {"test": 
+        {
+            "Bleu_1": 0.6456479384971744, 
+            "Bleu_2": 0.5052420130194599, 
+            "Bleu_3": 0.3843327099490886, 
+            "Bleu_4": 0.2888257389065465, 
+            "METEOR": 0.31081583936668, 
+            "ROUGE_L": 0.5325931803724581, 
+            "CIDEr": 0.9149957264609108, 
+            "SPICE": 0.2477929364222591
+        }
+    }
+    ```
