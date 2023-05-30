@@ -3,15 +3,6 @@
  # SPDX-License-Identifier: BSD-3-Clause
  # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 
-# Bleu_1: 0.831
-# Bleu_2: 0.689
-# Bleu_3: 0.552
-# Bleu_4: 0.434
-# METEOR: 0.316
-# ROUGE_L: 0.618
-# CIDEr: 1.451
-# SPICE: 0.251
-
 model:
   arch: blip2_vicuna_instruct
   model_type: vicuna7b
@@ -26,9 +17,16 @@ datasets:
     text_processor:
         eval:
           name: "blip_caption"
-#     build_info:
-#         images:
-#             storage: '/export/share/datasets/vision/coco/images/'
+    build_info:
+        images:
+            storage: '/root/Documents/DATASETS/MS_COCO/images/'
+        annotations:
+            train:
+              storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json'
+            val:
+              storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json'
+            test:
+              storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json'
 
 run:
   task: captioning
@@ -40,9 +38,10 @@ run:
   max_len: 30
   min_len: 8
   num_beams: 5
+  prompt: "a photo of "
 
   seed: 42
-  output_dir: "output/BLIP2_Instruct/Caption_coco_zeroshot_Vicuna7B"
+  output_dir: "/root/Documents/DEMOS/InstructBLIP/output/BLIP2_Instruct/Caption_coco"  
 
   evaluate: True
   test_splits: ["test"]

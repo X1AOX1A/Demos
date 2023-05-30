@@ -25,6 +25,28 @@ python image_caption.py # prompt: "Write a detailed description."
     
 ## Zero-shot on COCO Caption
 
+
+```shell
+bash eval/eval_caption_coco_zeroshot.sh
+```
+
+- results (id: 20230530193):
+
+    ```shell
+    {"test": {"Bleu_1": 0.7466045230315724, "Bleu_2": 0.5993208337263296, "Bleu_3": 0.4675615004127482, "Bleu_4": 0.3585509550197416, "METEOR": 0.3212760433534643, "ROUGE_L": 0.585138477095227, "CIDEr": 1.2763550147656038, "SPICE": 0.2630221747601865}}
+    ```
+
+- output examples (test_epochbest.json):
+
+    ```shell
+    {"caption": "a man riding a motorcycle on a dirt road with mountains in the background", "image_id": 391895}, 
+    {"caption": "a bunch of wooden spoons and forks laying on top of a table", "image_id": 386164}, 
+    {"caption": "a group of people riding bikes down a bike lane on a city street", "image_id": 462565}, 
+    {"caption": "a black and white photo of a man riding a motorcycle on the road", "image_id": 559665}, 
+    {"caption": "there are many bunches of bananas sitting in a wooden crate", "image_id": 579664}, 
+    {"caption": "a small blue and white airplane sitting on top of a grassy field", "image_id": 561100}, 
+    ```
+
 ## Fine-tune on COCO Caption
 
 ```shell
