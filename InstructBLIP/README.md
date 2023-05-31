@@ -21,8 +21,8 @@ Comparisons on CoCo Caption:
 # Fine-tune config2 (id: 20230530140) 224*224 + fp16 + frozen vit + w/o prompt input
 {"test": {"Bleu_1": 0.7278631469367983, "Bleu_2": 0.5763612766028686, "Bleu_3": 0.44552994783644373, "Bleu_4": 0.3394997649602075, "METEOR": 0.31657784749619083, "ROUGE_L": 0.5672990346704339, "CIDEr": 1.222601238307893, "SPICE": 0.25930430961814355}}
 
-# Fine-tune config3 (id:            ) 364*364 + fp32 + frozen vit
-TBD
+# Fine-tune config3 (id:20230530200) 364*364 + fp32 + frozen vit
+{"test": {"Bleu_1": 0.7287232389770885, "Bleu_2": 0.5769753488637221, "Bleu_3": 0.4461610385180321, "Bleu_4": 0.33984031098849005, "METEOR": 0.317469198885754, "ROUGE_L": 0.5691194868337418, "CIDEr": 1.2194068333038235, "SPICE": 0.25962940599291295}}
 
 # Fine-tune config4 (id:            ) 364*364 + fp32
 OOM

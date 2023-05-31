@@ -193,14 +193,26 @@ datasets:
           name: "blip_caption"
 ```
 
-- results (id: ):
+- results (id: 20230530200):
 
     ```shell
+    {"val": {"Bleu_1": 0.7223830494903033, "Bleu_2": 0.5720198155590948, "Bleu_3": 0.44170136149752964, "Bleu_4": 0.33694593501369136, "METEOR": 0.3162939284380281, "ROUGE_L": 0.5659274864399679, "CIDEr": 1.198395668199758, "SPICE": 0.25558297279377773}}
+    {"val": {"Bleu_1": 0.730013839861901, "Bleu_2": 0.5758633306113864, "Bleu_3": 0.4425502726641666, "Bleu_4": 0.3362122103663983, "METEOR": 0.3161968206972472, "ROUGE_L": 0.5668404176018996, "CIDEr": 1.2083830196966556, "SPICE": 0.2549904385956513}}
+    {"val": {"Bleu_1": 0.7275446793418648, "Bleu_2": 0.572917509595055, "Bleu_3": 0.44066838394794755, "Bleu_4": 0.33476024359615136, "METEOR": 0.31604669328356016, "ROUGE_L": 0.5660869674451197, "CIDEr": 1.1922701648005396, "SPICE": 0.25569855507940165}}
+    {"val": {"Bleu_1": 0.7265992132131102, "Bleu_2": 0.5723489189212765, "Bleu_3": 0.44021778542656953, "Bleu_4": 0.33460363739063154, "METEOR": 0.3175027025602582, "ROUGE_L": 0.5650015422535982, "CIDEr": 1.1920597183199857, "SPICE": 0.25644834313716064}}
+    {"val": {"Bleu_1": 0.7277065406462029, "Bleu_2": 0.5721808107230061, "Bleu_3": 0.43952925798761777, "Bleu_4": 0.3330760040063023, "METEOR": 0.31586378580876445, "ROUGE_L": 0.5635771258751316, "CIDEr": 1.1880406736012215, "SPICE": 0.25612229387122326}}
+    {"test": {"Bleu_1": 0.7287232389770885, "Bleu_2": 0.5769753488637221, "Bleu_3": 0.4461610385180321, "Bleu_4": 0.33984031098849005, "METEOR": 0.317469198885754, "ROUGE_L": 0.5691194868337418, "CIDEr": 1.2194068333038235, "SPICE": 0.25962940599291295}}
     ```
 
 - output examples (test_epochbest.json):
 
     ```shell
+    {"caption": "a man riding a motorcycle on a dirt road with a mountain in the background", "image_id": 391895}, 
+    {"caption": "there are many wooden spoons and forks lined up on a table", "image_id": 386164}, 
+    {"caption": "a group of people riding bicycles down a bike lane on a city street", "image_id": 462565}, 
+    {"caption": "a black and white photo of two men riding on a motorcycle", "image_id": 559665}, 
+    {"caption": "there are many bunches of ripe and unripe bananas in a bin", "image_id": 579664}, 
+    {"caption": "a close up of a model airplane sitting on the ground in a field", "image_id": 561100}, 
     ```
 
 ### 4. Config4
@@ -236,6 +248,7 @@ datasets:
 - results (id: ):
 
     ```shell
+    OOM
     ```
 
 - output examples (test_epochbest.json):
