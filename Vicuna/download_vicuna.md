@@ -6,7 +6,8 @@ Replace the directories in the following commands with the appropriate paths.
 ```shell
 export PATH_TO_LLAMA="/root/Documents/MODELS/LLaMA"
 export PATH_TO_LLAMA_HF="/root/Documents/MODELS/LLaMA-HF"
-export PATH_TO_VICUNA="/root/Documents/MODELS/Vicuna"
+export PATH_TO_VICUNA_V0="/root/Documents/MODELS/Vicuna-V0"
+export PATH_TO_VICUNA_V11="/root/Documents/MODELS/Vicuna-V1.1"
 ```
 
 ## 0. Install dependencies
@@ -16,15 +17,6 @@ export PATH_TO_VICUNA="/root/Documents/MODELS/Vicuna"
 # functools.cache requires python>=3.9
 conda create -n Vicuna python=3.9
 conda activate Vicuna
-
-# Install fastchat to get Vicuna weights
-# Vicuna weight V1.1 are only compatible with transformers>=4.28.0 and fschat >= 0.2.0
-pip install --upgrade fschat
-
-## Or, install from source
-# git clone https://github.com/lm-sys/FastChat.git
-# cd FastChat
-# pip3 install -e .
 ```
 
 ## 1. Obtain LLaMA weights
@@ -117,25 +109,83 @@ pip install --upgrade fschat
 
 - [Reference](https://github.com/lm-sys/FastChat#vicuna-weights)
 
+
+### Vicuna-V0
+
+- Apply the delta weights to the LLaMA-HF weights:
+
     ```shell
+    # Install fastchat to get Vicuna weights
+    # Install the FastChat library that is compatible with v0 Vicuna by
+    pip install git+https://github.com/lm-sys/FastChat.git@v0.1.10
+
     # Get Vicuna weights by applying delta to LLaMA weights
-    # For Vicuna-7B
+    # For Vicuna-7B-V0
     python -m fastchat.model.apply_delta \
         --base-model-path $PATH_TO_LLAMA_HF/7B \
-        --target-model-path $PATH_TO_VICUNA/7B \
-        --delta-path lmsys/vicuna-7b-delta-v1.1
+        --target-model-path $PATH_TO_VICUNA_V0/7B \
+        --delta-path lmsys/vicuna-7b-delta-v0
 
-    # For Vicuna-13B
+    # For Vicuna-13B-V0
     python -m fastchat.model.apply_delta \
         --base-model-path $PATH_TO_LLAMA_HF/13B \
-        --target-model-path $PATH_TO_VICUNA/13B \
+        --target-model-path $PATH_TO_VICUNA_V0/13B \
+        --delta-path lmsys/vicuna-13b-delta-v0
+    ```
+
+- The Vicuna weights are organized as follows:
+
+    ```shell
+    PATH_TO_VICUNA_V0
+    |-- [ 334]  13B
+    |   |-- [ 565]  config.json
+    |   |-- [ 137]  generation_config.json
+    |   |-- [9.3G]  pytorch_model-00001-of-00003.bin
+    |   |-- [9.2G]  pytorch_model-00002-of-00003.bin
+    |   |-- [6.1G]  pytorch_model-00003-of-00003.bin
+    |   |-- [ 33K]  pytorch_model.bin.index.json
+    |   |-- [ 411]  special_tokens_map.json
+    |   |-- [488K]  tokenizer.model
+    |   `-- [ 727]  tokenizer_config.json
+    `-- [ 290]  7B
+        |-- [ 564]  config.json
+        |-- [ 137]  generation_config.json
+        |-- [9.3G]  pytorch_model-00001-of-00002.bin
+        |-- [3.3G]  pytorch_model-00002-of-00002.bin
+        |-- [ 26K]  pytorch_model.bin.index.json
+        |-- [ 411]  special_tokens_map.json
+        |-- [488K]  tokenizer.model
+        `-- [ 727]  tokenizer_config.json
+    ```
+
+
+### Vicuna-V1.1
+
+- Apply the delta weights to the LLaMA-HF weights:
+
+    ```shell
+    # Install fastchat to get Vicuna weights
+    # Vicuna weight V1.1 are only compatible with transformers>=4.28.0 and fschat >= 0.2.0
+    pip install --upgrade fschat
+
+    # Get Vicuna weights by applying delta to LLaMA weights
+    # For Vicuna-7B-V1.1
+    python -m fastchat.model.apply_delta \
+        --base-model-path $PATH_TO_LLAMA_HF/7B \
+        --target-model-path $PATH_TO_VICUNA_V11/7B \
+        --delta-path lmsys/vicuna-7b-delta-v1.1
+
+    # For Vicuna-13B-V1.1
+    python -m fastchat.model.apply_delta \
+        --base-model-path $PATH_TO_LLAMA_HF/13B \
+        --target-model-path $PATH_TO_VICUNA_V11/13B \
         --delta-path lmsys/vicuna-13b-delta-v1.1
     ```
 
 - The Vicuna weights are organized as follows:
 
     ```shell
-    PATH_TO_VICUNA
+    PATH_TO_VICUNA_V11
     |-- [ 334]  13B
     |   |-- [ 560]  config.json
     |   |-- [ 132]  generation_config.json
