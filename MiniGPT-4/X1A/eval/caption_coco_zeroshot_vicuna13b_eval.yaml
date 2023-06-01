@@ -1,0 +1,67 @@
+ # Copyright (c) 2022, salesforce.com, inc.
+ # All rights reserved.
+ # SPDX-License-Identifier: BSD-3-Clause
+ # For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+
+# Bleu_1: 0.832
+# Bleu_2: 0.691
+# Bleu_3: 0.556
+# Bleu_4: 0.438
+# METEOR: 0.317
+# ROUGE_L: 0.620
+# CIDEr: 1.461
+# SPICE: 0.252
+
+model:
+  arch: mini_gpt4
+  model_type: pretrain_vicuna
+  freeze_vit: True
+  freeze_qformer: True
+  max_txt_len: 160
+  end_sym: "###"
+  low_resource: False
+  prompt_path: "prompts/alignment.txt"
+  prompt_template: '###Human: {} ###Assistant: '
+  ckpt: '/root/Documents/MODELS/MiniGPT-4/13B/pretrained_minigpt4.pth'
+
+datasets:
+  coco_caption: # name of the dataset builder
+    vis_processor:
+        eval:
+          name: "blip_image_eval"
+          image_size: 224
+    text_processor:
+        eval:
+          name: "blip_caption"
+    build_info:
+        images:
+            storage: '/root/Documents/DATASETS/MS_COCO/images/'
+        annotations:
+            train:
+              storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json'
+            val:
+              storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json'
+            test:
+              storage: '/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json'
+
+run:
+  task: captioning
+  # optimizer
+  batch_size_train: 32
+  batch_size_eval: 16
+  num_workers: 4
+
+  max_len: 30
+  min_len: 8
+  num_beams: 5
+
+  seed: 42
+  output_dir: "/root/Documents/DEMOS/MiniGPT-4/X1A/output/Caption_coco/zeroshot"
+
+  evaluate: True
+  test_splits: ["test"]
+
+  device: "cuda"
+  world_size: 1
+  dist_url: "env://"
+  distributed: True
