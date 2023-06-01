@@ -6,8 +6,7 @@
 
 - Ref to [Datasets-MS_COCO](https://github.com/X1AOX1A/Datasets/tree/main/MS_COCO)
 
-<details>
-    </summary><b>COCO Test Samples</b></summary>
+<details></summary>COCO Test Samples</summary>
 
 ```shell
 {"image": "val2014/COCO_val2014_000000391895.jpg", 
@@ -47,7 +46,6 @@
             "Wooden spoons and forks are all over a table.", 
             "A table and chairs with wooden kitchen tools on top."]}
 ```
-
 </details>
 
 ### Prepare Vicuna Weights
