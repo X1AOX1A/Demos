@@ -73,7 +73,7 @@ python image_caption.py # prompt: "Write a detailed description."
 ## 2. Zero-shot on COCO Caption
 
 ```shell
-bash X1A/eval/caption_coco_zeroshot_vicuna13b_eval.sh
+bash X1A/eval/caption_coco_zeroshot_vicuna13b.sh
 ```
 
 - results (id: ):
@@ -90,7 +90,7 @@ bash X1A/eval/caption_coco_zeroshot_vicuna13b_eval.sh
 
 
 ```shell
-bash X1A/eval/caption_coco_vicuna13b_eval.sh
+bash X1A/train/caption_coco_ft_vicuna13b.sh
 ```
 
 - results (id: ):
