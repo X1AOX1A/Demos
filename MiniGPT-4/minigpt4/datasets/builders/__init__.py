@@ -11,12 +11,16 @@ from minigpt4.datasets.builders.image_text_pair_builder import (
     LaionBuilder,
     CCSBUAlignBuilder
 )
+from minigpt4.datasets.builders.caption_builder import (
+    COCOCapBuilder,
+)
 from minigpt4.common.registry import registry
 
 __all__ = [
     "CCSBUBuilder",
     "LaionBuilder",
-    "CCSBUAlignBuilder"
+    "CCSBUAlignBuilder",
+    "COCOCapBuilder",
 ]
 
 

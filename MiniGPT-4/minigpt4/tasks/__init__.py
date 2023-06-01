@@ -23,4 +23,5 @@ def setup_task(cfg):
 __all__ = [
     "BaseTask",
     "ImageTextPretrainTask",
+    "CaptionTask",
 ]
