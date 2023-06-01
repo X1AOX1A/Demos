@@ -8,6 +8,7 @@
 from minigpt4.common.registry import registry
 from minigpt4.tasks.base_task import BaseTask
 from minigpt4.tasks.image_text_pretrain import ImageTextPretrainTask
+from minigpt4.tasks.captioning import CaptionTask
 
 
 def setup_task(cfg):
