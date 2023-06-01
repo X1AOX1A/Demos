@@ -41,7 +41,7 @@ run:
   prompt: "a photo of "
 
   seed: 42
-  output_dir: "/root/Documents/DEMOS/InstructBLIP/output/BLIP2/Caption_coco"
+  output_dir: "/root/Documents/DEMOS/LAVIS/X1A/output/BLIP2/Caption_coco"
 
   evaluate: True
   test_splits: ["test"]

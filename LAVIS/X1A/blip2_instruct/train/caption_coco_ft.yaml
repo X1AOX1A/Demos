@@ -68,7 +68,7 @@ run:
   num_beams: 5
 
   seed: 42
-  output_dir: "/root/Documents/DEMOS/InstructBLIP/output/BLIP2_Instruct/Caption_coco"  
+  output_dir: "/root/Documents/DEMOS/LAVIS/X1A/output/BLIP2_Instruct/Caption_coco"  
 
   amp: True
   resume_ckpt_path: null

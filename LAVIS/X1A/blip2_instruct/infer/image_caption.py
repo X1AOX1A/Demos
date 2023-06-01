@@ -5,7 +5,7 @@ from PIL import Image
 if __name__ == "__main__":
     # add path to "/root/Documents/DEMOS/LAVIS/lavis/configs/models/blip2/blip2_instruct_vicuna7b.yaml"
     #   llm_model: "/root/Documents/MODELS/Vicuna/7B"
-    IMAGE_PATH = "/root/Documents/DEMOS/OFA/X1A/inference/cat.jpg"
+    IMAGE_PATH = "/root/Documents/DEMOS/LAVIS/X1A/blip2_instruct/infer/cat.jpg"
 
     # setup device to use
     device = torch.device("cuda") if torch.cuda.is_available() else "cpu"
