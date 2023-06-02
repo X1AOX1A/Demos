@@ -68,7 +68,7 @@ python image_caption.py # prompt: "Write a detailed description."
 
 - output:
 
-    ```
+    `This is an image of a small cat peeking out from under a bed. It appears to be a domestic shorthair cat with grey and white fur, standing on its hind legs and looking up at the camera. It has bright blue eyes and a small, pointed face. The cat is standing on a wooden bed frame, with a blanket draped over it. The background appears to be a wall with a white sheet hanging on it. The lighting in the room is soft and diffused, casting a warm glow on the cat's fur.`
 
 ## 2. Zero-shot on COCO Caption
 
