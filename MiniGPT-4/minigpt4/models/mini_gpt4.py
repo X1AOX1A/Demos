@@ -126,6 +126,9 @@ class MiniGPT4(Blip2Base):
         self.visual_encoder.float()
 
     def encode_img(self, image):
+        # image -> [VIT]&[LN] -> image_embeds, image_atts
+        # query_tokens + image_embeds + image_atts -> [Q-Former] -> query_output
+        # query_output -> [Linear] -> inputs_llama, atts_llama
         device = image.device
         if self.low_resource:
             self.vit_to_cpu()
@@ -149,6 +152,8 @@ class MiniGPT4(Blip2Base):
 
     def prompt_wrap(self, img_embeds, atts_img, prompt):
         if prompt:
+            # TODO: here the prompt is a single str for all samples
+            #      we need to make it a list of str for each sample
             batch_size = img_embeds.shape[0]
             p_before, p_after = prompt.split('<ImageHere>')
             p_before_tokens = self.llama_tokenizer(
@@ -170,6 +175,10 @@ class MiniGPT4(Blip2Base):
             print('VQA Batch')
             vqa_prompt = '###Human: <Img><ImageHere></Img> '
             img_embeds, atts_img = self.prompt_wrap(img_embeds, atts_img, vqa_prompt)
+        # TODO: read prompt for each sample from dataset
+        # elif "prompt" in samples.keys():
+        #     prompt = samples["prompt"]
+        #     ...
         elif self.prompt_list:
             prompt = random.choice(self.prompt_list)
             img_embeds, atts_img = self.prompt_wrap(img_embeds, atts_img, prompt)
@@ -218,6 +227,69 @@ class MiniGPT4(Blip2Base):
         loss = outputs.loss
 
         return {"loss": loss}
+
+    @torch.no_grad()
+    def generate(
+        self,
+        samples,
+        use_nucleus_sampling=False,
+        num_beams=5,
+        max_length=30,
+        min_length=1,
+        top_p=0.9,
+        repetition_penalty=1.0,
+        length_penalty=1.0,
+        num_captions=1,
+        temperature=1,
+    ):
+        """
+        Args:
+            samples (dict): A dictionary containing the following keys:
+                - image (torch.Tensor): A tensor of shape (batch_size, 3, H, W)
+            use_nucleus_sampling (bool): Whether to use nucleus sampling. If False, use top-k sampling.
+            num_beams (int): Number of beams for beam search. 1 means no beam search.
+            max_length (int): The maximum length of the sequence to be generated.
+            min_length (int): The minimum length of the sequence to be generated.
+            top_p (float): The cumulative probability for nucleus sampling.
+            repetition_penalty (float): The parameter for repetition penalty. 1.0 means no penalty.
+            num_captions (int): Number of captions to be generated for each image.
+        Returns:
+            captions (list): A list of strings of length batch_size * num_captions.
+        """
+        image = samples["image"]
+        with self.maybe_autocast():
+            img_embeds, atts_img = self.encode_img(image)
+            if hasattr(samples, 'question_split'):  # VQA dataset
+                print('VQA Batch')
+                vqa_prompt = '###Human: <Img><ImageHere></Img> '
+                img_embeds, atts_img = self.prompt_wrap(img_embeds, atts_img, vqa_prompt)
+            # TODO: read prompt for each sample from dataset
+            # elif "prompt" in samples.keys():
+            #     prompt = samples["prompt"]
+            #     ...
+            elif self.prompt_list:
+                prompt = random.choice(self.prompt_list)
+                img_embeds, atts_img = self.prompt_wrap(img_embeds, atts_img, prompt)
+                        
+            outputs = self.llama_model.generate(
+                inputs_embeds=img_embeds, 
+                attention_mask=atts_img,
+                do_sample=use_nucleus_sampling,
+                top_p=top_p,
+                temperature=temperature,
+                num_beams=num_beams,
+                max_length=max_length,
+                min_length=min_length,
+                repetition_penalty=repetition_penalty,
+                length_penalty=length_penalty,
+                num_return_sequences=num_captions,
+            )
+            output_text = self.llama_tokenizer.batch_decode(
+                outputs, skip_special_tokens=True
+            )
+            
+            output_text = [text.strip() for text in output_text]
+            return output_text
 
     @classmethod
     def from_config(cls, cfg):
