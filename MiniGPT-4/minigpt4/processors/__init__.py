@@ -7,6 +7,8 @@
 
 from minigpt4.processors.base_processor import BaseProcessor
 from minigpt4.processors.blip_processors import (
+    BlipImageTrainProcessor,
+    BlipImageEvalProcessor,
     Blip2ImageTrainProcessor,
     Blip2ImageEvalProcessor,
     BlipCaptionProcessor,
@@ -16,6 +18,8 @@ from minigpt4.common.registry import registry
 
 __all__ = [
     "BaseProcessor",
+    "BlipImageTrainProcessor",
+    "BlipImageEvalProcessor",
     "Blip2ImageTrainProcessor",
     "Blip2ImageEvalProcessor",
     "BlipCaptionProcessor",

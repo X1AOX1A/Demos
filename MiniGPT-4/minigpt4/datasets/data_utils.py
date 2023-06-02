@@ -11,56 +11,42 @@ import os
 import random as rnd
 import tarfile
 import zipfile
-import random
-from typing import List
-from tqdm import tqdm
 
 import decord
-from decord import VideoReader
 import webdataset as wds
 import numpy as np
 import torch
-from torch.utils.data.dataset import IterableDataset
-
+from torch.utils.data.dataset import IterableDataset, ChainDataset
+from decord import VideoReader
 from minigpt4.common.registry import registry
 from minigpt4.datasets.datasets.base_dataset import ConcatDataset
-
+from tqdm import tqdm
 
 decord.bridge.set_bridge("torch")
 MAX_INT = registry.get("MAX_INT")
 
 
-class ChainDataset(wds.DataPipeline):
-    r"""Dataset for chaining multiple :class:`DataPipeline` s.
+def load_video(video_path, n_frms=MAX_INT, height=-1, width=-1, sampling="uniform"):
+    vr = VideoReader(uri=video_path, height=height, width=width)
 
-    This class is useful to assemble different existing dataset streams. The
-    chaining operation is done on-the-fly, so concatenating large-scale
-    datasets with this class will be efficient.
+    vlen = len(vr)
+    start, end = 0, vlen
 
-    Args:
-        datasets (iterable of IterableDataset): datasets to be chained together
-    """
-    def __init__(self, datasets: List[wds.DataPipeline]) -> None:
-        super().__init__()
-        self.datasets = datasets
-        self.prob = []
-        self.names = []
-        for dataset in self.datasets:
-            if hasattr(dataset, 'name'):
-                self.names.append(dataset.name)
-            else:
-                self.names.append('Unknown')
-            if hasattr(dataset, 'sample_ratio'):
-                self.prob.append(dataset.sample_ratio)
-            else:
-                self.prob.append(1)
-                logging.info("One of the datapipeline doesn't define ratio and set to 1 automatically.")
+    n_frms = min(n_frms, vlen)
 
-    def __iter__(self):
-        datastreams = [iter(dataset) for dataset in self.datasets]
-        while True:
-            select_datastream = random.choices(datastreams, weights=self.prob, k=1)[0]
-            yield next(select_datastream)
+    if sampling == "uniform":
+        indices = np.arange(start, end, vlen / n_frms).astype(int)
+    elif sampling == "headtail":
+        indices_h = sorted(rnd.sample(range(vlen // 2), n_frms // 2))
+        indices_t = sorted(rnd.sample(range(vlen // 2, vlen), n_frms // 2))
+        indices = indices_h + indices_t
+    else:
+        raise NotImplementedError
+
+    # get_batch -> T, H, W, C
+    frms = vr.get_batch(indices).permute(3, 0, 1, 2).float()  # (C, T, H, W)
+
+    return frms
 
 
 def apply_to_sample(f, sample):
@@ -171,15 +157,9 @@ def concat_datasets(datasets):
 
             # if len(iterable_datasets) > 0:
             # concatenate map-style datasets and iterable-style datasets separately
-            if len(iterable_datasets) > 1:
-                chained_datasets = (
-                    ChainDataset(iterable_datasets)
-                )
-            elif len(iterable_datasets) == 1:
-                chained_datasets = iterable_datasets[0]
-            else:
-                chained_datasets = None
-
+            chained_datasets = (
+                ChainDataset(iterable_datasets) if len(iterable_datasets) > 0 else None
+            )
             concat_datasets = (
                 ConcatDataset(map_datasets) if len(map_datasets) > 0 else None
             )
@@ -194,3 +174,111 @@ def concat_datasets(datasets):
 
     return datasets
 
+
+def extract_archive(from_path, to_path=None, overwrite=False):
+    """Extract archive.
+
+    Args:
+        from_path: the path of the archive.
+        to_path: the root path of the extracted files (directory of from_path)
+        overwrite: overwrite existing files (False)
+
+    Returns:
+        List of paths to extracted files even if not overwritten.
+
+    Examples:
+        >>> url = 'http://www.quest.dcs.shef.ac.uk/wmt16_files_mmt/validation.tar.gz'
+        >>> from_path = './validation.tar.gz'
+        >>> to_path = './'
+        >>> torchtext.utils.download_from_url(url, from_path)
+        >>> torchtext.utils.extract_archive(from_path, to_path)
+        >>> ['.data/val.de', '.data/val.en']
+        >>> torchtext.utils.download_from_url(url, from_path)
+        >>> torchtext.utils.extract_archive(from_path, to_path)
+        >>> ['.data/val.de', '.data/val.en']
+
+    """
+
+    if to_path is None:
+        to_path = os.path.dirname(from_path)
+
+    if from_path.endswith((".tar.gz", ".tgz")):
+        logging.info("Opening tar file {} to {}.".format(from_path, to_path))
+        with tarfile.open(from_path, "r") as tar:
+            files = []
+            for file_ in tqdm(tar):
+                file_path = os.path.join(to_path, file_.name)
+                if file_.isfile():
+                    files.append(file_path)
+                    if os.path.exists(file_path):
+                        logging.info("{} already extracted.".format(file_path))
+                        if not overwrite:
+                            continue
+                tar.extract(file_, to_path)
+            logging.info("Finished extracting tar file {}.".format(from_path))
+            return files
+
+    elif from_path.endswith(".zip"):
+        assert zipfile.is_zipfile(from_path), from_path
+        logging.info("Opening zip file {} to {}.".format(from_path, to_path))
+        with zipfile.ZipFile(from_path, "r") as zfile:
+            files = []
+            for file_ in tqdm(zfile.namelist()):
+                file_path = os.path.join(to_path, file_)
+                files.append(file_path)
+                if os.path.exists(file_path):
+                    logging.info("{} already extracted.".format(file_path))
+                    if not overwrite:
+                        continue
+                zfile.extract(file_, to_path)
+        files = [f for f in files if os.path.isfile(f)]
+        logging.info("Finished extracting zip file {}.".format(from_path))
+        return files
+
+    elif from_path.endswith(".gz"):
+        logging.info("Opening gz file {} to {}.".format(from_path, to_path))
+        default_block_size = 65536
+        filename = from_path[:-3]
+        files = [filename]
+        with gzip.open(from_path, "rb") as gzfile, open(filename, "wb") as d_file:
+            while True:
+                block = gzfile.read(default_block_size)
+                if not block:
+                    break
+                else:
+                    d_file.write(block)
+            d_file.write(block)
+        logging.info("Finished extracting gz file {}.".format(from_path))
+        return files
+
+    else:
+        raise NotImplementedError(
+            "We currently only support tar.gz, .tgz, .gz and zip achives."
+        )
+
+
+def save_frames_grid(img_array, out_path):
+    import torch
+    from PIL import Image
+    from torchvision.utils import make_grid
+
+    if len(img_array.shape) == 3:
+        img_array = img_array.unsqueeze(0)
+    elif len(img_array.shape) == 5:
+        b, t, c, h, w = img_array.shape
+        img_array = img_array.view(-1, c, h, w)
+    elif len(img_array.shape) == 4:
+        pass
+    else:
+        raise NotImplementedError(
+            "Supports only (b,t,c,h,w)-shaped inputs. First two dimensions can be ignored."
+        )
+
+    assert img_array.shape[1] == 3, "Exepcting input shape of (H, W, 3), i.e. RGB-only."
+
+    grid = make_grid(img_array)
+    ndarr = grid.permute(1, 2, 0).to("cpu", torch.uint8).numpy()
+
+    img = Image.fromarray(ndarr)
+
+    img.save(out_path)

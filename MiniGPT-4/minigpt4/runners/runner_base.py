@@ -104,7 +104,6 @@ class RunnerBase:
             for n, p in self.model.named_parameters():
                 if not p.requires_grad:
                     continue  # frozen weights
-                print(n)
                 if p.ndim < 2 or "bias" in n or "ln" in n or "bn" in n:
                     p_non_wd.append(p)
                 else:
@@ -157,18 +156,10 @@ class RunnerBase:
             decay_rate = self.config.run_cfg.get("lr_decay_rate", None)
             warmup_start_lr = self.config.run_cfg.get("warmup_lr", -1)
             warmup_steps = self.config.run_cfg.get("warmup_steps", 0)
-            iters_per_epoch = self.config.run_cfg.get("iters_per_epoch", None)
-
-            if iters_per_epoch is None:
-                try:
-                    iters_per_epoch = len(self.dataloaders['train'])
-                except (AttributeError, TypeError):
-                    iters_per_epoch = 10000
 
             self._lr_sched = lr_sched_cls(
                 optimizer=self.optimizer,
                 max_epoch=max_epoch,
-                iters_per_epoch=iters_per_epoch,
                 min_lr=min_lr,
                 init_lr=init_lr,
                 decay_rate=decay_rate,
@@ -197,6 +188,8 @@ class RunnerBase:
             dict: {split_name: (tuples of) dataloader}
         """
         if self._dataloaders is None:
+            # reoganize datasets by split and concatenate/chain if necessary
+            dataset_ratios = self.config.run_cfg.get("train_dataset_ratios", None)
 
             # concatenate map-style datasets and chain wds.DataPipe datasets separately
             # training set becomes a tuple (ConcatDataset, ChainDataset), both are
@@ -207,8 +200,7 @@ class RunnerBase:
             )
 
             datasets = reorg_datasets_by_split(self.datasets)
-            self.datasets = datasets
-            # self.datasets = concat_datasets(datasets)
+            self.datasets = concat_datasets(datasets)
 
             # print dataset statistics after concatenation/chaining
             for split_name in self.datasets:
@@ -269,6 +261,7 @@ class RunnerBase:
                 batch_sizes=batch_sizes,
                 is_trains=is_trains,
                 collate_fns=collate_fns,
+                dataset_ratios=dataset_ratios,
             )
 
             self._dataloaders = {k: v for k, v in zip(split_names, dataloaders)}
@@ -409,8 +402,7 @@ class RunnerBase:
             if self.evaluate_only:
                 break
 
-            if self.config.run_cfg.distributed:
-                dist.barrier()
+            dist.barrier()
 
         # testing phase
         test_epoch = "best" if len(self.valid_splits) > 0 else cur_epoch
@@ -555,8 +547,6 @@ class RunnerBase:
             datasets, batch_sizes, is_trains, collate_fns
         ):
             if isinstance(dataset, list) or isinstance(dataset, tuple):
-                if hasattr(dataset[0], 'sample_ratio') and dataset_ratios is None:
-                    dataset_ratios = [d.sample_ratio for d in dataset]
                 loader = MultiIterLoader(
                     loaders=[
                         _create_loader(d, num_workers, bsz, is_train, collate_fn[i])
@@ -634,7 +624,7 @@ class RunnerBase:
             raise RuntimeError("checkpoint url or path is invalid")
 
         state_dict = checkpoint["model"]
-        self.unwrap_dist_model(self.model).load_state_dict(state_dict,strict=False)
+        self.unwrap_dist_model(self.model).load_state_dict(state_dict)
 
         self.optimizer.load_state_dict(checkpoint["optimizer"])
         if self.scaler and "scaler" in checkpoint:
