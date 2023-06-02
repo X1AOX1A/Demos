@@ -5,7 +5,7 @@ model:
   freeze_qformer: True
   max_txt_len: 160
   end_sym: "###"
-  low_resource: False # Default True, to save GPU memory, Vicuna loads as 8 bit by default, with a beam search width of 1
+  low_resource: False # If True, use 8 bit and put vit in cpu
   prompt_path: "prompts/alignment.txt"
   prompt_template: '###Human: {} ###Assistant: '
   ckpt: '/root/Documents/MODELS/MiniGPT-4/13B/pretrained_minigpt4.pth'
