@@ -18,7 +18,8 @@ class MiniGPT4(Blip2Base):
     """
 
     PRETRAINED_MODEL_CONFIG_DICT = {
-        "pretrain_vicuna": "configs/models/minigpt4.yaml",
+        "pretrain_vicuna_7B": "configs/models/minigpt4_7B.yaml",
+        "pretrain_vicuna_13B": "configs/models/minigpt4_13B.yaml",
     }
 
     def __init__(

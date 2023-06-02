@@ -5,7 +5,7 @@
 
 model:
   arch: mini_gpt4
-  model_type: pretrain_vicuna
+  model_type: pretrain_vicuna_7B
   freeze_vit: True
   freeze_qformer: True
   max_txt_len: 160
