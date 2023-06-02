@@ -287,6 +287,7 @@ class MiniGPT4(Blip2Base):
             output_text = self.llama_tokenizer.batch_decode(
                 outputs, skip_special_tokens=True
             )
+            # TODO: clean the output text
             
             output_text = [text.strip() for text in output_text]
             return output_text
