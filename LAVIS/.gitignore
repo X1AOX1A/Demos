@@ -145,7 +145,7 @@ dmypy.json
 cython_debug/
 
 # project-specific
-output/
+# output/
 debug*/
 *.bak
 *.dir
