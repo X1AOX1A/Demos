@@ -1,6 +1,0 @@
-<Img><ImageHere></Img> Give a short image caption in MS COCO caption style.
-<Img><ImageHere></Img> Describe the scene captured in this image from the MSCOCO dataset.
-<Img><ImageHere></Img> Write a compelling caption for this MSCOCO image that conveys its essence.
-<Img><ImageHere></Img> Imagine you are describing this MSCOCO image to a visually impaired person. What would you say?
-<Img><ImageHere></Img> Provide a creative and engaging caption for this MSCOCO image to capture the viewer's attention.
-<Img><ImageHere></Img> In a few sentences, tell a story inspired by this MSCOCO image.

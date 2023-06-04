@@ -1,0 +1,11 @@
+<Img><ImageHere></Img> Give a short image caption.
+<Img><ImageHere></Img> Give a short image description.
+<Img><ImageHere></Img> Write a short description for the image.
+<Img><ImageHere></Img> Write a description for the photo.
+<Img><ImageHere></Img> Provide a description of what is presented in the photo. 
+<Img><ImageHere></Img> Brieﬂy describe the content of the image.
+<Img><ImageHere></Img> Can you brieﬂy explain what you see in the image?
+<Img><ImageHere></Img> Could you use a few words to describe what you perceive in the photo? 
+<Img><ImageHere></Img> Please provide a short depiction of the picture.
+<Img><ImageHere></Img> Using language, provide a short account of the image.
+<Img><ImageHere></Img> Use a few words to illustrate what is happening in the picture.

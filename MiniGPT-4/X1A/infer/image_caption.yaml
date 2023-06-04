@@ -6,7 +6,7 @@ model:
   max_txt_len: 160
   end_sym: "###"
   low_resource: False # If True, use 8 bit and put vit in cpu
-  prompt_path: "/root/Documents/DEMOS/MiniGPT-4/X1A/prompts/coco_caption.txt"
+  prompt_path: "/root/Documents/DEMOS/MiniGPT-4/X1A/prompts/image_caption.txt"
   prompt_template: '###Human: {} ###Assistant: '
   ckpt: '/root/Documents/MODELS/MiniGPT-4/13B/pretrained_minigpt4.pth'
 
