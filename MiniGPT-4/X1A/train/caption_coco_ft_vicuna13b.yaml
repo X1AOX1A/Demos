@@ -11,7 +11,7 @@ model:
   max_txt_len: 160
   end_sym: "###"
   low_resource: False
-  prompt_path: "prompts/alignment.txt"
+  prompt_path: "/root/Documents/DEMOS/MiniGPT-4/X1A/prompts/coco_caption.txt"
   prompt_template: '###Human: {} ###Assistant: '
   ckpt: '/root/Documents/MODELS/MiniGPT-4/13B/pretrained_minigpt4.pth'
 

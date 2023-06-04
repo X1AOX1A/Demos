@@ -1,0 +1,25 @@
+model:
+  arch: mini_gpt4
+  model_type: pretrain_vicuna_13B
+  freeze_vit: True
+  freeze_qformer: True
+  max_txt_len: 160
+  end_sym: "###"
+  low_resource: False # If True, use 8 bit and put vit in cpu
+  prompt_path: "/root/Documents/DEMOS/MiniGPT-4/X1A/prompts/coco_caption.txt"
+  prompt_template: '###Human: {} ###Assistant: '
+  ckpt: '/root/Documents/MODELS/MiniGPT-4/13B/pretrained_minigpt4.pth'
+
+
+datasets:
+  cc_sbu_align:
+    vis_processor:
+      train:
+        name: "blip2_image_eval"
+        image_size: 224
+    text_processor:
+      train:
+        name: "blip_caption"
+
+run:
+  task: image_text_pretrain
