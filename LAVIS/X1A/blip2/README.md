@@ -8,7 +8,7 @@
 
 ## COCO Test Samples
 
-<details open></summary>COCO Test Samples</summary>
+<details></summary>COCO Test Samples</summary>
 
 ```shell
 {"image": "val2014/COCO_val2014_000000391895.jpg", 
@@ -56,7 +56,7 @@
 bash eval/eval_caption_coco_zeroshot.sh
 ```
 
-- results (id: 20230530192):
+- results (id: [20230530192](../output/BLIP2/Caption_coco/20230530192)):
 
     ```shell
     {"test": {"Bleu_1": 0.8087646987513475, "Bleu_2": 0.6635921266407677, "Bleu_3": 0.5253239038842143, "Bleu_4": 0.4083353178203791, "METEOR": 0.30675232411996856, "ROUGE_L": 0.5995837387260223, "CIDEr": 1.364507624426746, "SPICE": 0.2463983715446396}}
@@ -113,7 +113,7 @@ datasets:
 bash eval/eval_caption_coco.sh
 ```
 
-- results (id: 20230530191):
+- results (id: [20230530191](../output/BLIP2/Caption_coco/20230530191)):
 
     ```shell
     {"test": {"Bleu_1": 0.8201297151042333, "Bleu_2": 0.6798741833125047, "Bleu_3": 0.5447682489351027, "Bleu_4": 0.4282143073884025, "METEOR": 0.3206602458928521, "ROUGE_L": 0.6190080234427047, "CIDEr": 1.4555016501050175, "SPICE": 0.2553750024016312}}

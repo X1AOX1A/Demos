@@ -24,7 +24,7 @@ python image_caption.py # prompt: "Write a detailed description."
     
 ## COCO Test Samples
 
-<details open></summary>COCO Test Samples</summary>
+<details></summary>COCO Test Samples</summary>
 
 ```shell
 {"image": "val2014/COCO_val2014_000000391895.jpg", 
