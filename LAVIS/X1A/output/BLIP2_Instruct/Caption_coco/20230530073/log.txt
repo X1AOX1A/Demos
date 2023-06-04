@@ -1,0 +1,133 @@
+{
+    "run": {
+        "task": "captioning",
+        "lr_sched": "linear_warmup_cosine_lr",
+        "init_lr": 1e-05,
+        "min_lr": 0,
+        "warmup_lr": 1e-08,
+        "warmup_steps": 1000,
+        "weight_decay": 0.05,
+        "max_epoch": 5,
+        "batch_size_train": 16,
+        "batch_size_eval": 8,
+        "num_workers": 4,
+        "accum_grad_iters": 1,
+        "max_len": 30,
+        "min_len": 8,
+        "num_beams": 5,
+        "seed": 42,
+        "output_dir": "/root/Documents/DEMOS/InstructBLIP/output/BLIP2_Instruct/Caption_coco",
+        "amp": true,
+        "resume_ckpt_path": null,
+        "evaluate": false,
+        "train_splits": [
+            "train"
+        ],
+        "valid_splits": [
+            "val"
+        ],
+        "test_splits": [
+            "test"
+        ],
+        "device": "cuda",
+        "world_size": 4,
+        "dist_url": "env://",
+        "distributed": true,
+        "rank": 0,
+        "gpu": 0,
+        "dist_backend": "nccl"
+    },
+    "model": {
+        "arch": "blip2_vicuna_instruct",
+        "load_finetuned": false,
+        "load_pretrained": true,
+        "pretrained": "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/InstructBLIP/instruct_blip_vicuna7b_trimmed.pth",
+        "finetuned": "",
+        "image_size": 224,
+        "drop_path_rate": 0,
+        "use_grad_checkpoint": true,
+        "vit_precision": "fp16",
+        "freeze_vit": true,
+        "num_query_token": 32,
+        "llm_model": "/root/Documents/MODELS/Vicuna/7B",
+        "prompt": "",
+        "model_type": "vicuna7b"
+    },
+    "preprocess": {
+        "vis_processor": {
+            "train": {
+                "name": "blip2_image_train",
+                "image_size": 224
+            },
+            "eval": {
+                "name": "blip_image_eval",
+                "image_size": 224
+            }
+        },
+        "text_processor": {
+            "train": {
+                "name": "blip_caption"
+            },
+            "eval": {
+                "name": "blip_caption"
+            }
+        }
+    },
+    "datasets": {
+        "coco_caption_extend": {
+            "dataset_card": "dataset_card/coco_caption.md",
+            "data_type": "images",
+            "build_info": {
+                "annotations": {
+                    "train": {
+                        "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_train.json",
+                        "md5": "aa31ac474cf6250ebb81d18348a07ed8",
+                        "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json"
+                    },
+                    "val": {
+                        "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_val.json",
+                        "md5": "b273847456ef5580e33713b1f7de52a0",
+                        "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json"
+                    },
+                    "test": {
+                        "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_test.json",
+                        "md5": "3ff34b0ef2db02d01c37399f6a2a6cd1",
+                        "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json"
+                    }
+                },
+                "images": {
+                    "storage": "/root/Documents/DATASETS/MS_COCO/images/"
+                }
+            },
+            "vis_processor": {
+                "train": {
+                    "name": "blip2_image_train",
+                    "image_size": 224
+                },
+                "eval": {
+                    "name": "blip_image_eval",
+                    "image_size": 224
+                }
+            },
+            "text_processor": {
+                "train": {
+                    "name": "blip_caption",
+                    "prompt": "a photo of "
+                },
+                "eval": {
+                    "name": "blip_caption"
+                }
+            }
+        }
+    }
+}
+{"train_lr": "0.000", "train_loss": "1.196"}
+{"val_Bleu_1": 0.647760605064115, "val_Bleu_2": 0.5081890057061402, "val_Bleu_3": 0.3870170587289628, "val_Bleu_4": 0.2912790733097921, "val_METEOR": 0.3105995652934542, "val_ROUGE_L": 0.5343182267923948, "val_CIDEr": 0.9134107450064268, "val_SPICE": 0.24478299750963978, "val_agg_metrics": 1.204689818316219, "val_best_epoch": 0}
+{"train_lr": "0.000", "train_loss": "1.172"}
+{"val_Bleu_1": 0.5973055018941694, "val_Bleu_2": 0.46719563440119, "val_Bleu_3": 0.35508273509355626, "val_Bleu_4": 0.26709520067779924, "val_METEOR": 0.3025066755240536, "val_ROUGE_L": 0.5138951656222592, "val_CIDEr": 0.7688301034126004, "val_SPICE": 0.23116755154918991, "val_agg_metrics": 1.0359253040903997, "val_best_epoch": 0}
+{"train_lr": "0.000", "train_loss": "1.157"}
+{"val_Bleu_1": 0.5770818611224684, "val_Bleu_2": 0.4514493446288603, "val_Bleu_3": 0.3441983234504983, "val_Bleu_4": 0.2605700851723652, "val_METEOR": 0.3009256915964947, "val_ROUGE_L": 0.5065751216446777, "val_CIDEr": 0.7280729940998132, "val_SPICE": 0.22763485904351846, "val_agg_metrics": 0.9886430792721783, "val_best_epoch": 0}
+{"train_lr": "0.000", "train_loss": "1.146"}
+{"val_Bleu_1": 0.5771319500030715, "val_Bleu_2": 0.45014913368789566, "val_Bleu_3": 0.34284573914070754, "val_Bleu_4": 0.25943214491020883, "val_METEOR": 0.30091932290952034, "val_ROUGE_L": 0.5060713644392506, "val_CIDEr": 0.715442978792575, "val_SPICE": 0.22842278087565324, "val_agg_metrics": 0.9748751237027838, "val_best_epoch": 0}
+{"train_lr": "0.000", "train_loss": "1.138"}
+{"val_Bleu_1": 0.5768921741925045, "val_Bleu_2": 0.44874855467959657, "val_Bleu_3": 0.3416551869039863, "val_Bleu_4": 0.258942834298103, "val_METEOR": 0.30060672479425654, "val_ROUGE_L": 0.5055461980659608, "val_CIDEr": 0.7206900767766667, "val_SPICE": 0.22744325720067235, "val_agg_metrics": 0.9796329110747697, "val_best_epoch": 0}
