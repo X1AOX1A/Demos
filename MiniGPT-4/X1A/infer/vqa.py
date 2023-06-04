@@ -53,11 +53,11 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
-    args.cfg_path = "/root/Documents/DEMOS/MiniGPT-4/eval_configs/minigpt4_eval.yaml"
+    args.cfg_path = "/root/Documents/DEMOS/MiniGPT-4/X1A/infer/image_caption.yaml"
     args.gpu_id = 0
 
     # Inputs
-    IMAGE_PATH = "/root/Documents/DEMOS/OFA/X1A/inference/cat.jpg"
+    IMAGE_PATH = "/root/Documents/DEMOS/MiniGPT-4/X1A/infer/cat.jpg"
     TEXT = "Describe this image in detail."
 
     # Run VQA without history information
