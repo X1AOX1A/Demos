@@ -2,7 +2,7 @@
  Copyright (c) 2022, salesforce.com, inc.
  All rights reserved.
  SPDX-License-Identifier: BSD-3-Clause
- For full license text, see the LICENSE_Lavis file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 """
 
 import math
@@ -59,7 +59,6 @@ class LinearWarmupCosineLRScheduler:
         self,
         optimizer,
         max_epoch,
-        iters_per_epoch,
         min_lr,
         init_lr,
         warmup_steps=0,
@@ -69,7 +68,6 @@ class LinearWarmupCosineLRScheduler:
         self.optimizer = optimizer
 
         self.max_epoch = max_epoch
-        self.iters_per_epoch = iters_per_epoch
         self.min_lr = min_lr
 
         self.init_lr = init_lr
@@ -77,8 +75,8 @@ class LinearWarmupCosineLRScheduler:
         self.warmup_start_lr = warmup_start_lr if warmup_start_lr >= 0 else init_lr
 
     def step(self, cur_epoch, cur_step):
-        total_cur_step = cur_epoch * self.iters_per_epoch + cur_step
-        if total_cur_step < self.warmup_steps:
+        # assuming the warmup iters less than one epoch
+        if cur_epoch == 0:
             warmup_lr_schedule(
                 step=cur_step,
                 optimizer=self.optimizer,
@@ -88,9 +86,9 @@ class LinearWarmupCosineLRScheduler:
             )
         else:
             cosine_lr_schedule(
-                epoch=total_cur_step,
+                epoch=cur_epoch,
                 optimizer=self.optimizer,
-                max_epoch=self.max_epoch * self.iters_per_epoch,
+                max_epoch=self.max_epoch,
                 init_lr=self.init_lr,
                 min_lr=self.min_lr,
             )
