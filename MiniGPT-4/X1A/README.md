@@ -56,6 +56,24 @@
 
 - Ref to [Demos-MiniGPT-4](https://github.com/X1AOX1A/Demos/blob/main/MiniGPT-4/X1A/download_minigpt4.md)
 
+## 0. Image Caption Prompts
+
+- Ref to [./prompts/image_caption.txt]
+
+```
+<Img><ImageHere></Img> Give a short image caption.
+<Img><ImageHere></Img> Give a short image description.
+<Img><ImageHere></Img> Write a short description for the image.
+<Img><ImageHere></Img> Write a description for the photo.
+<Img><ImageHere></Img> Provide a description of what is presented in the photo. 
+<Img><ImageHere></Img> Brieﬂy describe the content of the image.
+<Img><ImageHere></Img> Can you brieﬂy explain what you see in the image?
+<Img><ImageHere></Img> Could you use a few words to describe what you perceive in the photo? 
+<Img><ImageHere></Img> Please provide a short depiction of the picture.
+<Img><ImageHere></Img> Using language, provide a short account of the image.
+<Img><ImageHere></Img> Use a few words to illustrate what is happening in the picture.
+```
+
 ## 1. Image Caption Inference
 
 ```shell
@@ -72,18 +90,50 @@ python image_caption.py # prompt: "Write a detailed description."
 
 ## 2. Zero-shot on COCO Caption
 
+### 7B
+
 ```shell
-bash X1A/eval/caption_coco_zeroshot_vicuna13b.sh
+bash X1A/eval/caption_coco_zeroshot_vicuna7b.sh
 ```
 
-- results (id: ):
+- results (id: [20230604141](./output/Caption_coco/zeroshot/20230604141)):
 
     ```shell
+    {"test": {"Bleu_1": 0.4820870380661253, "Bleu_2": 0.3401892255319211, "Bleu_3": 0.23565363787189772, "Bleu_4": 0.1626809696901491, "METEOR": 0.2717151073190081, "ROUGE_L": 0.40910759242588157, "CIDEr": 0.12561348374309772, "SPICE": 0.22056907444717466}}
     ```
 
 - output examples (test_epochbest.json):
 
     ```shell
+    {"caption": "The image shows a man riding a motorcycle down a dirt road. The man is wearing a red shirt and black helmet", "image_id": 391895}, 
+    {"caption": "The image shows a man riding a bicycle on a dirt road next to a train track. The train is passing by in the", "image_id": 483108}, 
+    {"caption": "The image shows a wooden table with various spoons and forks arranged on it. The spoons and forks are made of wood and are", "image_id": 386164}, 
+    {"caption": "A white bathroom with a toilet, sink, and shower. The walls are tiled and there is a fan hanging from", "image_id": 403385}, 
+    {"caption": "This image shows a group of people riding bicycles on a bike lane in a city. The lane is painted green and", "image_id": 462565},
+     {"caption": "This image shows a bathroom with a toilet, sink, and a wooden shelf holding various items such as toothbrushes", "image_id": 192440}, 
+    ```
+
+### 13B
+
+```shell
+bash X1A/eval/caption_coco_zeroshot_vicuna13b.sh
+```
+
+- results (id: [20230604143](./output/Caption_coco/zeroshot/20230604143)):
+
+    ```shell
+    {"test": {"Bleu_1": 0.4861511006448363, "Bleu_2": 0.34079105130859116, "Bleu_3": 0.23551985689380542, "Bleu_4": 0.16136267645740487, "METEOR": 0.26675690771735394, "ROUGE_L": 0.40052710178184003, "CIDEr": 0.15520855369832945, "SPICE": 0.21353488688868716}}
+    ```
+
+- output examples (test_epochbest.json):
+
+    ```shell
+    {"caption": "The image shows a man riding a motorcycle on a dirt road with mountains in the background. The man is wearing a red sh", "image_id": 391895}, 
+    {"caption": "The image shows a man riding a bicycle on a dirt road next to a train track. The train is in the distance,", "image_id": 483108}, 
+    {"caption": "This image shows a table with a variety of wooden utensils, including spoons, forks, and knives, arranged neatly on", "image_id": 386164}, 
+    {"caption": "A white bathroom with a toilet, sink, and shower. The shower has a white plastic shower curtain and", "image_id": 403385}, 
+    {"caption": "This image shows a group of people riding bicycles on a city street. There are cars parked on the side of the road and", "image_id": 462565}, 
+    {"caption": "This is a photo of a bathroom with a toilet, sink, and shelving unit. The shelving unit is made", "image_id": 192440}, 
     ```
 
 ## 3. Fine-tune on COCO Caption
