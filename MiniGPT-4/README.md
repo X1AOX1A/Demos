@@ -1,6 +1,6 @@
 # MiniGPT-4: Enhancing Vision-language Understanding with Advanced Large Language Models
 
-![overview](figs/overview.png)
+![overview](https://github.com/Vision-CAIR/MiniGPT-4/raw/main/figs/overview.png)
 
 
 ## Getting Started
