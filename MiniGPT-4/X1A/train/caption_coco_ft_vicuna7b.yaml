@@ -5,7 +5,7 @@
 
 model:
   arch: mini_gpt4
-  model_type: pretrain_vicuna_13B
+  model_type: pretrain_vicuna_7b
   freeze_vit: True
   freeze_qformer: True
   max_txt_len: 160
@@ -13,7 +13,7 @@ model:
   low_resource: False
   prompt_path: "prompts/alignment.txt"
   prompt_template: '###Human: {} ###Assistant: '
-  ckpt: '/root/Documents/MODELS/MiniGPT-4/13B/pretrained_minigpt4.pth'
+  ckpt: '/root/Documents/MODELS/MiniGPT-4/7b/prerained_minigpt4_7b.pth'
 
 datasets:
   coco_caption: # name of the dataset builder
