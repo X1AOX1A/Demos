@@ -73,7 +73,7 @@ python image_caption.py # prompt: "Write a detailed description."
 bash eval/eval_caption_coco_zeroshot.sh
 ```
 
-- results (id: 20230530193):
+- results (id: [20230530193](../output/BLIP2_Instruct/Caption_coco/20230530193)):
 
     ```shell
     {"test": {"Bleu_1": 0.7466045230315724, "Bleu_2": 0.5993208337263296, "Bleu_3": 0.4675615004127482, "Bleu_4": 0.3585509550197416, "METEOR": 0.3212760433534643, "ROUGE_L": 0.585138477095227, "CIDEr": 1.2763550147656038, "SPICE": 0.2630221747601865}}
@@ -131,7 +131,7 @@ datasets:
           name: "blip_caption"
 ```
 
-- results (id: 20230530073):
+- results (id: [20230530073](../output/BLIP2_Instruct/Caption_coco/20230530073)):
 
     ```shell
     {"val": {"Bleu_1": 0.647760605064115, "Bleu_2": 0.5081890057061402, "Bleu_3": 0.3870170587289628, "Bleu_4": 0.2912790733097921, "METEOR": 0.3105995652934542, "ROUGE_L": 0.5343182267923948, "CIDEr": 0.9134107450064268, "SPICE": 0.24478299750963978}}
@@ -184,7 +184,7 @@ datasets:
         eval:
           name: "blip_caption"
 ```
-- results (id: 20230530140):
+- results (id: [20230530140](../output/BLIP2_Instruct/Caption_coco/20230530140)):
 
     ```shell
     {"val": {"Bleu_1": 0.7220016618963974, "Bleu_2": 0.5704259859815827, "Bleu_3": 0.438630491578156, "Bleu_4": 0.3326873871582765, "METEOR": 0.31416461167510695, "ROUGE_L": 0.5639709605355904, "CIDEr": 1.1862728592930292, "SPICE": 0.25501800646269157}}
@@ -236,7 +236,7 @@ datasets:
           name: "blip_caption"
 ```
 
-- results (id: 20230530200):
+- results (id: [20230530200](../output/BLIP2_Instruct/Caption_coco/20230530200)):
 
     ```shell
     {"val": {"Bleu_1": 0.7223830494903033, "Bleu_2": 0.5720198155590948, "Bleu_3": 0.44170136149752964, "Bleu_4": 0.33694593501369136, "METEOR": 0.3162939284380281, "ROUGE_L": 0.5659274864399679, "CIDEr": 1.198395668199758, "SPICE": 0.25558297279377773}}
