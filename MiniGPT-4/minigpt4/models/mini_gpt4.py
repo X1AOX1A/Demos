@@ -284,22 +284,23 @@ class MiniGPT4(Blip2Base):
                 repetition_penalty=repetition_penalty,
                 length_penalty=length_penalty,
                 num_return_sequences=num_captions,
-            )
+            )           
 
-            # clean the output tokens
-            for idx, output in enumerate(outputs):
-                # the model might output a unknow token <unk> at the beginning. remove it
-                outputs[idx] = output[1:] if output[0] == 0 else output
-                # some users find that there is a start token <s> at the beginning. remove it
-                outputs[idx] = output[1:] if output[0] == 1 else output
-
+            ## clean the output tokens   
+            # the model might output a unknow token <unk> at the beginning. remove it
+            outputs = [output[1:] if output[0]==0 else output for output in outputs]
+            # some users find that there is a start token <s> at the beginning. remove it
+            outputs = [output[1:] if output[0]==1 else output for output in outputs]
+            
+            ## decode the output tokens
             output_text = self.llama_tokenizer.batch_decode(
                 outputs, skip_special_tokens=True
             )
             
+            ## clean the output text
             # remove the stop sign '###'
             output_text = [text.split(self.end_sym)[0] for text in output_text]
-            # clean the output text
+            # remove the assistant's response prefix
             output_text = [text.split("Assistant:")[-1].strip() for text in output_text]
             return output_text
 
