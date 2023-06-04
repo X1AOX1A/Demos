@@ -56,18 +56,17 @@ class BaseTask:
             builder = registry.get_builder_class(name)(dataset_config)
             dataset = builder.build_datasets()
 
-            dataset['train'].name = name
-            if 'sample_ratio' in dataset_config:
-                dataset['train'].sample_ratio = dataset_config.sample_ratio
-
             datasets[name] = dataset
 
         return datasets
 
     def train_step(self, model, samples):
-        loss_dict = model(samples)
-        loss = loss_dict["loss"]
-        return loss, loss_dict
+        output = model(samples)
+        loss_dict = {}
+        for k,v in output.items():
+            if "loss" in k:
+                loss_dict[k] = v
+        return output["loss"], loss_dict
 
     def valid_step(self, model, samples):
         raise NotImplementedError
