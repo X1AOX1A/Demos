@@ -138,10 +138,32 @@ bash X1A/eval/caption_coco_zeroshot_vicuna13b.sh
 
 ## 3. Fine-tune on COCO Caption
 
+### 7B
+
+
+```shell
+bash X1A/train/caption_coco_ft_vicuna7b.sh
+```
+
+- It may take 3.5 hours on 1 40GB A100 GPU.
+
+- results (id: ):
+
+    ```shell
+    ```
+
+- output examples (test_epochbest.json):
+
+    ```shell
+    ```
+
+### 13B
 
 ```shell
 bash X1A/train/caption_coco_ft_vicuna13b.sh
 ```
+
+- It may take 6.5 hours on 1 40GB A100 GPU.
 
 - results (id: ):
 
