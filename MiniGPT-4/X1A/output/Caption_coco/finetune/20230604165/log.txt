@@ -1,0 +1,257 @@
+{
+    "run": {
+        "task": "captioning",
+        "lr_sched": "linear_warmup_cosine_lr",
+        "init_lr": 1e-05,
+        "min_lr": 0,
+        "warmup_lr": 1e-08,
+        "warmup_steps": 1000,
+        "weight_decay": 0.05,
+        "max_epoch": 5,
+        "batch_size_train": 16,
+        "batch_size_eval": 8,
+        "num_workers": 4,
+        "accum_grad_iters": 1,
+        "max_len": 30,
+        "min_len": 8,
+        "num_beams": 5,
+        "seed": 42,
+        "output_dir": "/root/Documents/DEMOS/MiniGPT-4/X1A/output/Caption_coco/finetune",
+        "amp": true,
+        "resume_ckpt_path": null,
+        "evaluate": false,
+        "train_splits": [
+            "train"
+        ],
+        "valid_splits": [
+            "val"
+        ],
+        "test_splits": [
+            "test"
+        ],
+        "device": "cuda",
+        "world_size": 1,
+        "dist_url": "env://",
+        "distributed": true,
+        "rank": 0,
+        "gpu": 0,
+        "dist_backend": "nccl"
+    },
+    "model": {
+        "arch": "mini_gpt4",
+        "image_size": 224,
+        "drop_path_rate": 0,
+        "use_grad_checkpoint": false,
+        "vit_precision": "fp16",
+        "freeze_vit": true,
+        "freeze_qformer": true,
+        "num_query_token": 32,
+        "llama_model": "/root/Documents/MODELS/Vicuna-V0/7B",
+        "prompt": "",
+        "model_type": "pretrain_vicuna_7B",
+        "max_txt_len": 160,
+        "end_sym": "###",
+        "low_resource": false,
+        "prompt_path": "/root/Documents/DEMOS/MiniGPT-4/X1A/prompts/image_caption.txt",
+        "prompt_template": "###Human: {} ###Assistant: ",
+        "ckpt": "/root/Documents/MODELS/MiniGPT-4/7B/prerained_minigpt4_7b.pth"
+    },
+    "preprocess": {
+        "vis_processor": {
+            "train": {
+                "name": "blip2_image_train",
+                "image_size": 224
+            },
+            "eval": {
+                "name": "blip2_image_eval",
+                "image_size": 224
+            }
+        },
+        "text_processor": {
+            "train": {
+                "name": "blip_caption"
+            },
+            "eval": {
+                "name": "blip_caption"
+            }
+        }
+    },
+    "datasets": {
+        "coco_caption": {
+            "dataset_card": "dataset_card/coco_caption.md",
+            "data_type": "images",
+            "build_info": {
+                "annotations": {
+                    "train": {
+                        "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_train.json",
+                        "md5": "aa31ac474cf6250ebb81d18348a07ed8",
+                        "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json"
+                    },
+                    "val": {
+                        "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_val.json",
+                        "md5": "b273847456ef5580e33713b1f7de52a0",
+                        "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json"
+                    },
+                    "test": {
+                        "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_test.json",
+                        "md5": "3ff34b0ef2db02d01c37399f6a2a6cd1",
+                        "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json"
+                    }
+                },
+                "images": {
+                    "storage": "/root/Documents/DATASETS/MS_COCO/images/"
+                }
+            },
+            "vis_processor": {
+                "train": {
+                    "name": "blip2_image_train",
+                    "image_size": 224
+                },
+                "eval": {
+                    "name": "blip_image_eval",
+                    "image_size": 224
+                }
+            },
+            "text_processor": {
+                "train": {
+                    "name": "blip_caption"
+                },
+                "eval": {
+                    "name": "blip_caption"
+                }
+            }
+        }
+    }
+}
+{
+    "run": {
+        "task": "captioning",
+        "lr_sched": "linear_warmup_cosine_lr",
+        "init_lr": 1e-05,
+        "min_lr": 0,
+        "warmup_lr": 1e-08,
+        "warmup_steps": 1000,
+        "weight_decay": 0.05,
+        "max_epoch": 5,
+        "batch_size_train": 16,
+        "batch_size_eval": 8,
+        "num_workers": 4,
+        "accum_grad_iters": 1,
+        "max_len": 30,
+        "min_len": 8,
+        "num_beams": 5,
+        "seed": 42,
+        "output_dir": "/root/Documents/DEMOS/MiniGPT-4/X1A/output/Caption_coco/finetune",
+        "amp": true,
+        "resume_ckpt_path": null,
+        "evaluate": false,
+        "train_splits": [
+            "train"
+        ],
+        "valid_splits": [
+            "val"
+        ],
+        "test_splits": [
+            "test"
+        ],
+        "device": "cuda",
+        "world_size": 1,
+        "dist_url": "env://",
+        "distributed": false
+    },
+    "model": {
+        "arch": "mini_gpt4",
+        "image_size": 224,
+        "drop_path_rate": 0,
+        "use_grad_checkpoint": false,
+        "vit_precision": "fp16",
+        "freeze_vit": true,
+        "freeze_qformer": true,
+        "num_query_token": 32,
+        "llama_model": "/root/Documents/MODELS/Vicuna-V0/13B",
+        "prompt": "",
+        "model_type": "pretrain_vicuna_13B",
+        "max_txt_len": 160,
+        "end_sym": "###",
+        "low_resource": false,
+        "prompt_path": "/root/Documents/DEMOS/MiniGPT-4/X1A/prompts/image_caption.txt",
+        "prompt_template": "###Human: {} ###Assistant: ",
+        "ckpt": "/root/Documents/MODELS/MiniGPT-4/13B/pretrained_minigpt4.pth"
+    },
+    "preprocess": {
+        "vis_processor": {
+            "train": {
+                "name": "blip2_image_train",
+                "image_size": 224
+            },
+            "eval": {
+                "name": "blip2_image_eval",
+                "image_size": 224
+            }
+        },
+        "text_processor": {
+            "train": {
+                "name": "blip_caption"
+            },
+            "eval": {
+                "name": "blip_caption"
+            }
+        }
+    },
+    "datasets": {
+        "coco_caption": {
+            "dataset_card": "dataset_card/coco_caption.md",
+            "data_type": "images",
+            "build_info": {
+                "annotations": {
+                    "train": {
+                        "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_train.json",
+                        "md5": "aa31ac474cf6250ebb81d18348a07ed8",
+                        "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json"
+                    },
+                    "val": {
+                        "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_val.json",
+                        "md5": "b273847456ef5580e33713b1f7de52a0",
+                        "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json"
+                    },
+                    "test": {
+                        "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_test.json",
+                        "md5": "3ff34b0ef2db02d01c37399f6a2a6cd1",
+                        "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json"
+                    }
+                },
+                "images": {
+                    "storage": "/root/Documents/DATASETS/MS_COCO/images/"
+                }
+            },
+            "vis_processor": {
+                "train": {
+                    "name": "blip2_image_train",
+                    "image_size": 224
+                },
+                "eval": {
+                    "name": "blip_image_eval",
+                    "image_size": 224
+                }
+            },
+            "text_processor": {
+                "train": {
+                    "name": "blip_caption"
+                },
+                "eval": {
+                    "name": "blip_caption"
+                }
+            }
+        }
+    }
+}
+{"train_lr": "0.000", "train_loss": "1.452"}
+{"val_Bleu_1": 0.8285643580412961, "val_Bleu_2": 0.6820938076419607, "val_Bleu_3": 0.5404658783743302, "val_Bleu_4": 0.4204802614017213, "val_METEOR": 0.3032221362167212, "val_ROUGE_L": 0.6054528940955787, "val_CIDEr": 1.3708131604524039, "val_SPICE": 0.23619780610507632, "val_agg_metrics": 1.7912934218541252, "val_best_epoch": 0}
+{"train_lr": "0.000", "train_loss": "1.411"}
+{"val_Bleu_1": 0.8251942053327562, "val_Bleu_2": 0.6771352902537126, "val_Bleu_3": 0.5345543738366186, "val_Bleu_4": 0.4143061039058681, "val_METEOR": 0.3059235420316675, "val_ROUGE_L": 0.604510012355409, "val_CIDEr": 1.3724396103351058, "val_SPICE": 0.23888237931971804, "val_agg_metrics": 1.7867457142409737, "val_best_epoch": 0}
+{"train_lr": "0.000", "train_loss": "1.396"}
+{"val_Bleu_1": 0.8265086661324837, "val_Bleu_2": 0.6796314050954964, "val_Bleu_3": 0.5393680585907877, "val_Bleu_4": 0.422310112893888, "val_METEOR": 0.3077307999149136, "val_ROUGE_L": 0.60621960800547, "val_CIDEr": 1.3891688638164694, "val_SPICE": 0.2402761887811588, "val_agg_metrics": 1.8114789767103574, "val_best_epoch": 2}
+{"train_lr": "0.000", "train_loss": "1.387"}
+{"val_Bleu_1": 0.8280383364855213, "val_Bleu_2": 0.681159806659122, "val_Bleu_3": 0.5405530740670027, "val_Bleu_4": 0.4230513432290564, "val_METEOR": 0.3077385733109276, "val_ROUGE_L": 0.6076068112942264, "val_CIDEr": 1.3912009747045921, "val_SPICE": 0.23992969383556284, "val_agg_metrics": 1.8142523179336485, "val_best_epoch": 3}
+{"train_lr": "0.000", "train_loss": "1.383"}
+{"val_Bleu_1": 0.8296055871646845, "val_Bleu_2": 0.6831360759957191, "val_Bleu_3": 0.54305927878861, "val_Bleu_4": 0.4251564097863464, "val_METEOR": 0.30782148031350504, "val_ROUGE_L": 0.6082624233604935, "val_CIDEr": 1.3882465566609037, "val_SPICE": 0.23911777628752753, "val_agg_metrics": 1.8134029664472502, "val_best_epoch": 3}

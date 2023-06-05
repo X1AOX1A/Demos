@@ -1,6 +1,6 @@
 # MiniGPT-4
 
-## 0. Preparation
+## Preparation
 
 ### Prepare COCO Caption
 
@@ -58,7 +58,7 @@
 
 ## 0. Image Caption Prompts
 
-- Ref to [./prompts/image_caption.txt]
+- Ref to (image_caption.txt)[./prompts/image_caption.txt]
 
 ```
 <Img><ImageHere></Img> Give a short image caption.
@@ -78,7 +78,7 @@
 
 ```shell
 cd infer
-python image_caption.py # prompt: "Write a detailed description."
+python image_caption.py
 ```
 <p align="center">
 <img src="infer/cat.jpg" alt="cat" style="width:50%;"> 
@@ -110,7 +110,7 @@ bash X1A/eval/caption_coco_zeroshot_vicuna7b.sh
     {"caption": "The image shows a wooden table with various spoons and forks arranged on it. The spoons and forks are made of wood and are", "image_id": 386164}, 
     {"caption": "A white bathroom with a toilet, sink, and shower. The walls are tiled and there is a fan hanging from", "image_id": 403385}, 
     {"caption": "This image shows a group of people riding bicycles on a bike lane in a city. The lane is painted green and", "image_id": 462565},
-     {"caption": "This image shows a bathroom with a toilet, sink, and a wooden shelf holding various items such as toothbrushes", "image_id": 192440}, 
+    {"caption": "This image shows a bathroom with a toilet, sink, and a wooden shelf holding various items such as toothbrushes", "image_id": 192440}, 
     ```
 
 ### 13B
@@ -145,16 +145,28 @@ bash X1A/eval/caption_coco_zeroshot_vicuna13b.sh
 bash X1A/train/caption_coco_ft_vicuna7b.sh
 ```
 
-- It may take 3.5 hours on 1 40GB A100 GPU.
+- It may take 17.5 hours on 1 40GB A100 GPU.
 
-- results (id: ):
+- results (id: [20230604165](./output/Caption_coco/finetune/20230604165)):
 
     ```shell
+    {"val": {"Bleu_1": 0.8285643580412961, "Bleu_2": 0.6820938076419607, "Bleu_3": 0.5404658783743302, "Bleu_4": 0.4204802614017213, "METEOR": 0.3032221362167212, "ROUGE_L": 0.6054528940955787, "CIDEr": 1.3708131604524039, "SPICE": 0.23619780610507632}}
+    {"val": {"Bleu_1": 0.8251942053327562, "Bleu_2": 0.6771352902537126, "Bleu_3": 0.5345543738366186, "Bleu_4": 0.4143061039058681, "METEOR": 0.3059235420316675, "ROUGE_L": 0.604510012355409, "CIDEr": 1.3724396103351058, "SPICE": 0.23888237931971804}}
+    {"val": {"Bleu_1": 0.8265086661324837, "Bleu_2": 0.6796314050954964, "Bleu_3": 0.5393680585907877, "Bleu_4": 0.422310112893888, "METEOR": 0.3077307999149136, "ROUGE_L": 0.60621960800547, "CIDEr": 1.3891688638164694, "SPICE": 0.2402761887811588}}
+    {"val": {"Bleu_1": 0.8280383364855213, "Bleu_2": 0.681159806659122, "Bleu_3": 0.5405530740670027, "Bleu_4": 0.4230513432290564, "METEOR": 0.3077385733109276, "ROUGE_L": 0.6076068112942264, "CIDEr": 1.3912009747045921, "SPICE": 0.23992969383556284}}
+    {"val": {"Bleu_1": 0.8296055871646845, "Bleu_2": 0.6831360759957191, "Bleu_3": 0.54305927878861, "Bleu_4": 0.4251564097863464, "METEOR": 0.30782148031350504, "ROUGE_L": 0.6082624233604935, "CIDEr": 1.3882465566609037, "SPICE": 0.23911777628752753}}
+    {"test": {"Bleu_1": 0.8235381576431932, "Bleu_2": 0.6763404423956201, "Bleu_3": 0.5374860161883245, "Bleu_4": 0.41988559758412775, "METEOR": 0.30698082113681496, "ROUGE_L": 0.6066327840239495, "CIDEr": 1.3921050590438404, "SPICE": 0.24105304769371916}}
     ```
 
 - output examples (test_epochbest.json):
 
     ```shell
+    {"caption": "a man riding a motorcycle down a dirt road", "image_id": 391895}, 
+    {"caption": "a young girl blowing out candles on a cake", "image_id": 60623}, 
+    {"caption": "a man riding a bicycle next to a train", "image_id": 483108}, 
+    {"caption": "a kitchen with a sink and a window", "image_id": 384213}, 
+    {"caption": "a bunch of wooden spoons and forks on a table", "image_id": 386164}, 
+    {"caption": "a table with many wooden spoons on it", "image_id": 223648}, 
     ```
 
 ### 13B
@@ -163,9 +175,9 @@ bash X1A/train/caption_coco_ft_vicuna7b.sh
 bash X1A/train/caption_coco_ft_vicuna13b.sh
 ```
 
-- It may take 6.5 hours on 1 40GB A100 GPU.
+- It may take 32.5 hours on 1 40GB A100 GPU.
 
-- results (id: ):
+- results (id: [20230604175](./output/Caption_coco/finetune/20230604175)):
 
     ```shell
     ```
