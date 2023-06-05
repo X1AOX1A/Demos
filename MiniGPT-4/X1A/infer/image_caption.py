@@ -20,7 +20,7 @@ def parse_args():
 
 if __name__ == "__main__":    
     args = parse_args()
-    args.cfg_path = "/root/Documents/DEMOS/MiniGPT-4/X1A/infer/image_caption.yaml"
+    args.cfg_path = "/root/Documents/DEMOS/MiniGPT-4/X1A/infer/image_caption_13b.yaml"
     args.gpu_id = 0
     
     # Inputs

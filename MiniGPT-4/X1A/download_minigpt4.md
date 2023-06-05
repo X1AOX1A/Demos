@@ -55,7 +55,7 @@ export PATH_TO_MiniGPT4="/root/Documents/MODELS/MiniGPT-4"
     |-- [  45]  13B
     |   `-- [ 45M]  pretrained_minigpt4.pth
     `-- [  47]  7B
-        `-- [ 36M]  prerained_minigpt4_7b.pth
+        `-- [ 36M]  pretrained_minigpt4_7b.pth
     ```
 
 - Then, set the path to the pretrained checkpoint in the evaluation config file in [eval_configs/minigpt4_eval.yaml](https://github.com/X1AOX1A/Demos/blob/main/MiniGPT-4/eval_configs/minigpt4_eval.yaml#L10) at Line 11.
