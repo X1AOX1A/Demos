@@ -1,0 +1,214 @@
+WARNING:__main__:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+| distributed init (rank 0, world 2): env://
+| distributed init (rank 1, world 2): env://
+2023-06-04 14:30:35,228 [INFO] 
+=====  Running Parameters    =====
+2023-06-04 14:30:35,228 [INFO] {
+    "batch_size_eval": 8,
+    "batch_size_train": 16,
+    "device": "cuda",
+    "dist_backend": "nccl",
+    "dist_url": "env://",
+    "distributed": true,
+    "evaluate": true,
+    "gpu": 0,
+    "max_len": 30,
+    "min_len": 8,
+    "num_beams": 5,
+    "num_workers": 4,
+    "output_dir": "/root/Documents/DEMOS/MiniGPT-4/X1A/output/Caption_coco/zeroshot",
+    "rank": 0,
+    "seed": 42,
+    "task": "captioning",
+    "test_splits": [
+        "test"
+    ],
+    "world_size": 2
+}
+2023-06-04 14:30:35,228 [INFO] 
+======  Dataset Attributes  ======
+2023-06-04 14:30:35,228 [INFO] 
+======== coco_caption =======
+2023-06-04 14:30:35,229 [INFO] {
+    "build_info": {
+        "annotations": {
+            "test": {
+                "md5": "3ff34b0ef2db02d01c37399f6a2a6cd1",
+                "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json",
+                "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_test.json"
+            },
+            "train": {
+                "md5": "aa31ac474cf6250ebb81d18348a07ed8",
+                "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json",
+                "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_train.json"
+            },
+            "val": {
+                "md5": "b273847456ef5580e33713b1f7de52a0",
+                "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json",
+                "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_val.json"
+            }
+        },
+        "images": {
+            "storage": "/root/Documents/DATASETS/MS_COCO/images/"
+        }
+    },
+    "data_type": "images",
+    "dataset_card": "dataset_card/coco_caption.md",
+    "text_processor": {
+        "eval": {
+            "name": "blip_caption"
+        }
+    },
+    "vis_processor": {
+        "eval": {
+            "image_size": 224,
+            "name": "blip_image_eval"
+        }
+    }
+}
+2023-06-04 14:30:35,229 [INFO] 
+======  Model Attributes  ======
+2023-06-04 14:30:35,229 [INFO] {
+    "arch": "mini_gpt4",
+    "ckpt": "/root/Documents/MODELS/MiniGPT-4/13B/pretrained_minigpt4.pth",
+    "drop_path_rate": 0,
+    "end_sym": "###",
+    "freeze_qformer": true,
+    "freeze_vit": true,
+    "image_size": 224,
+    "llama_model": "/root/Documents/MODELS/Vicuna-V0/13B",
+    "low_resource": false,
+    "max_txt_len": 160,
+    "model_type": "pretrain_vicuna_13B",
+    "num_query_token": 32,
+    "prompt": "",
+    "prompt_path": "/root/Documents/DEMOS/MiniGPT-4/X1A/prompts/image_caption.txt",
+    "prompt_template": "###Human: {} ###Assistant: ",
+    "use_grad_checkpoint": false,
+    "vit_precision": "fp16"
+}
+Using downloaded and verified file: /root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json
+Using downloaded and verified file: /root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json
+Using downloaded and verified file: /root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json
+2023-06-04 14:30:35,230 [INFO] Building datasets...
+Loading VIT
+2023-06-04 14:30:56,467 [INFO] freeze vision encoder
+Loading VIT Done
+Loading Q-Former
+2023-06-04 14:31:00,239 [INFO] load checkpoint from https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained_flant5xxl.pth
+2023-06-04 14:31:00,255 [INFO] freeze Qformer
+Loading Q-Former Done
+Loading LLAMA
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:09<00:18,  9.48s/it]Loading checkpoint shards:  33%|███▎      | 1/3 [00:09<00:19,  9.72s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:18<00:09,  9.16s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:19<00:09,  9.82s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:24<00:00,  7.60s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:24<00:00,  8.06s/it]
+Loading LLAMA Done
+Load 11 training prompts
+Prompt Example 
+###Human: <Img><ImageHere></Img> Use a few words to illustrate what is happening in the picture. ###Assistant: 
+Load BLIP2-LLM Checkpoint: /root/Documents/MODELS/MiniGPT-4/13B/pretrained_minigpt4.pth
+2023-06-04 14:35:27,466 [INFO] dataset_ratios not specified, datasets will be concatenated (map-style datasets) or chained (webdataset.DataPipeline).
+2023-06-04 14:35:27,466 [INFO] Loaded 566747 records for train split from the dataset.
+2023-06-04 14:35:27,466 [INFO] Loaded 5000 records for val split from the dataset.
+2023-06-04 14:35:27,466 [INFO] Loaded 5000 records for test split from the dataset.
+2023-06-04 14:35:27,466 [INFO] Empty train splits.
+2023-06-04 14:35:27,466 [INFO] Empty train splits.
+2023-06-04 14:35:27,466 [INFO] Empty train splits.
+Loading checkpoint shards: 100%|██████████| 3/3 [00:25<00:00,  8.22s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:25<00:00,  8.64s/it]
+Evaluation  [  0/313]  eta: 0:44:24    time: 8.5133  data: 4.6128  max mem: 35015
+Evaluation  [ 10/313]  eta: 0:14:39    time: 2.9025  data: 0.4202  max mem: 35636
+Evaluation  [ 20/313]  eta: 0:12:43    time: 2.3092  data: 0.0009  max mem: 35994
+Evaluation  [ 30/313]  eta: 0:11:48    time: 2.2822  data: 0.0009  max mem: 36032
+Evaluation  [ 40/313]  eta: 0:11:09    time: 2.2939  data: 0.0008  max mem: 36032
+Evaluation  [ 50/313]  eta: 0:10:37    time: 2.3055  data: 0.0008  max mem: 36033
+Evaluation  [ 60/313]  eta: 0:10:07    time: 2.3006  data: 0.0008  max mem: 36033
+Evaluation  [ 70/313]  eta: 0:09:40    time: 2.2941  data: 0.0008  max mem: 36033
+Evaluation  [ 80/313]  eta: 0:09:13    time: 2.2945  data: 0.0008  max mem: 36033
+Evaluation  [ 90/313]  eta: 0:08:48    time: 2.2950  data: 0.0008  max mem: 36033
+Evaluation  [100/313]  eta: 0:08:22    time: 2.2995  data: 0.0008  max mem: 36033
+Evaluation  [110/313]  eta: 0:07:58    time: 2.3089  data: 0.0008  max mem: 36033
+Evaluation  [120/313]  eta: 0:07:34    time: 2.3132  data: 0.0008  max mem: 36033
+Evaluation  [130/313]  eta: 0:07:09    time: 2.3041  data: 0.0008  max mem: 36033
+Evaluation  [140/313]  eta: 0:06:45    time: 2.3043  data: 0.0008  max mem: 36033
+Evaluation  [150/313]  eta: 0:06:21    time: 2.3019  data: 0.0008  max mem: 36033
+Evaluation  [160/313]  eta: 0:05:57    time: 2.2934  data: 0.0008  max mem: 36033
+Evaluation  [170/313]  eta: 0:05:34    time: 2.2883  data: 0.0008  max mem: 36033
+Evaluation  [180/313]  eta: 0:05:10    time: 2.2850  data: 0.0008  max mem: 36033
+Evaluation  [190/313]  eta: 0:04:46    time: 2.2752  data: 0.0008  max mem: 36033
+Evaluation  [200/313]  eta: 0:04:23    time: 2.2795  data: 0.0008  max mem: 36033
+Evaluation  [210/313]  eta: 0:03:59    time: 2.3053  data: 0.0008  max mem: 36033
+Evaluation  [220/313]  eta: 0:03:36    time: 2.2916  data: 0.0008  max mem: 36033
+Evaluation  [230/313]  eta: 0:03:12    time: 2.2665  data: 0.0008  max mem: 36033
+Evaluation  [240/313]  eta: 0:02:49    time: 2.2841  data: 0.0008  max mem: 36033
+Evaluation  [250/313]  eta: 0:02:26    time: 2.3070  data: 0.0008  max mem: 36033
+Evaluation  [260/313]  eta: 0:02:03    time: 2.3125  data: 0.0008  max mem: 36033
+Evaluation  [270/313]  eta: 0:01:39    time: 2.2979  data: 0.0008  max mem: 36033
+Evaluation  [280/313]  eta: 0:01:16    time: 2.2873  data: 0.0008  max mem: 36033
+Evaluation  [290/313]  eta: 0:00:53    time: 2.2932  data: 0.0008  max mem: 36033
+Evaluation  [300/313]  eta: 0:00:30    time: 2.3027  data: 0.0008  max mem: 36033
+Evaluation  [310/313]  eta: 0:00:06    time: 2.2955  data: 0.0008  max mem: 36033
+Evaluation  [312/313]  eta: 0:00:02    time: 2.2925  data: 0.0218  max mem: 36033
+Evaluation Total time: 0:12:04 (2.3160 s / it)
+2023-06-04 14:47:43,627 [WARNING] rank 0 starts merging results.
+result file saved to /root/Documents/DEMOS/MiniGPT-4/X1A/output/Caption_coco/zeroshot/20230604143/result/test_epochbest.json
+Using downloaded and verified file: /root/Documents/CACHE/minigpt4/coco_gt/coco_karpathy_test_gt.json
+loading annotations into memory...
+Done (t=0.02s)
+creating index...
+index created!
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+tokenization...
+PTBTokenizer tokenized 307085 tokens at 1252563.40 tokens per second.
+Jun 04, 2023 2:47:44 PM edu.stanford.nlp.process.PTBLexer next
+WARNING: Untokenizable: ? (U+D83C, decimal: 55356)
+PTBTokenizer tokenized 121252 tokens at 543975.68 tokens per second.
+setting up scorers...
+computing Bleu score...
+{'testlen': 108709, 'reflen': 64354, 'guess': [108709, 103862, 99015, 94170], 'correct': [52849, 24812, 11138, 4887]}
+ratio: 1.689234546415115
+Bleu_1: 0.486
+Bleu_2: 0.341
+Bleu_3: 0.236
+Bleu_4: 0.161
+computing METEOR score...
+METEOR: 0.267
+computing Rouge score...
+ROUGE_L: 0.401
+computing CIDEr score...
+CIDEr: 0.155
+computing SPICE score...
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.nustaq.serialization.FSTClazzInfo (file:/data/root/anaconda3/envs/minigpt4/lib/python3.9/site-packages/pycocoevalcap/spice/lib/fst-2.47.jar) to field java.lang.String.value
+WARNING: Please consider reporting this to the maintainers of org.nustaq.serialization.FSTClazzInfo
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+Parsing reference captions
+Parsing test captions
+Initiating Stanford parsing pipeline
+[main] INFO edu.stanford.nlp.pipeline.StanfordCoreNLP - Adding annotator tokenize
+[main] INFO edu.stanford.nlp.pipeline.TokenizerAnnotator - TokenizerAnnotator: No tokenizer type provided. Defaulting to PTBTokenizer.
+[main] INFO edu.stanford.nlp.pipeline.StanfordCoreNLP - Adding annotator ssplit
+[main] INFO edu.stanford.nlp.pipeline.StanfordCoreNLP - Adding annotator parse
+[main] INFO edu.stanford.nlp.parser.common.ParserGrammar - Loading parser from serialized file edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz ... 
+done [0.4 sec].
+[main] INFO edu.stanford.nlp.pipeline.StanfordCoreNLP - Adding annotator lemma
+[main] INFO edu.stanford.nlp.pipeline.StanfordCoreNLP - Adding annotator ner
+Loading classifier from edu/stanford/nlp/models/ner/english.all.3class.distsim.crf.ser.gz ... done [1.0 sec].
+Loading classifier from edu/stanford/nlp/models/ner/english.muc.7class.distsim.crf.ser.gz ... done [0.4 sec].
+Loading classifier from edu/stanford/nlp/models/ner/english.conll.4class.distsim.crf.ser.gz ... done [0.6 sec].
+Threads( StanfordCoreNLP ) [43.166 seconds]
+Warning: Nashorn engine is planned to be removed from a future JDK release
+SPICE evaluation took: 54.09 s
+SPICE: 0.214
+Bleu_1: 0.486
+Bleu_2: 0.341
+Bleu_3: 0.236
+Bleu_4: 0.161
+METEOR: 0.267
+ROUGE_L: 0.401
+CIDEr: 0.155
+SPICE: 0.214
