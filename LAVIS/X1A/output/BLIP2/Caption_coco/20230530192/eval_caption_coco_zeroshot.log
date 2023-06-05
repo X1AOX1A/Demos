@@ -1,0 +1,174 @@
+WARNING:__main__:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+| distributed init (rank 1, world 4): env://
+| distributed init (rank 3, world 4): env://
+| distributed init (rank 0, world 4): env://
+| distributed init (rank 2, world 4): env://
+2023-05-30 19:21:42,495 [INFO] 
+=====  Running Parameters    =====
+2023-05-30 19:21:42,495 [INFO] {
+    "batch_size_eval": 16,
+    "batch_size_train": 32,
+    "device": "cuda",
+    "dist_backend": "nccl",
+    "dist_url": "env://",
+    "distributed": true,
+    "evaluate": true,
+    "gpu": 0,
+    "max_len": 30,
+    "min_len": 8,
+    "num_beams": 5,
+    "num_workers": 4,
+    "output_dir": "/root/Documents/DEMOS/InstructBLIP/output/BLIP2/Caption_coco",
+    "prompt": "a photo of ",
+    "rank": 0,
+    "seed": 42,
+    "task": "captioning",
+    "test_splits": [
+        "test"
+    ],
+    "world_size": 4
+}
+2023-05-30 19:21:42,495 [INFO] 
+======  Dataset Attributes  ======
+2023-05-30 19:21:42,495 [INFO] 
+======== coco_caption =======
+2023-05-30 19:21:42,496 [INFO] {
+    "build_info": {
+        "annotations": {
+            "test": {
+                "md5": "3ff34b0ef2db02d01c37399f6a2a6cd1",
+                "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json",
+                "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_test.json"
+            },
+            "train": {
+                "md5": "aa31ac474cf6250ebb81d18348a07ed8",
+                "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json",
+                "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_train.json"
+            },
+            "val": {
+                "md5": "b273847456ef5580e33713b1f7de52a0",
+                "storage": "/root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json",
+                "url": "https://storage.googleapis.com/sfr-vision-language-research/datasets/coco_karpathy_val.json"
+            }
+        },
+        "images": {
+            "storage": "/root/Documents/DATASETS/MS_COCO/images/"
+        }
+    },
+    "data_type": "images",
+    "dataset_card": "dataset_card/coco_caption.md",
+    "text_processor": {
+        "eval": {
+            "name": "blip_caption"
+        }
+    },
+    "vis_processor": {
+        "eval": {
+            "image_size": 224,
+            "name": "blip_image_eval"
+        }
+    }
+}
+2023-05-30 19:21:42,496 [INFO] 
+======  Model Attributes  ======
+2023-05-30 19:21:42,496 [INFO] {
+    "arch": "blip2_opt",
+    "drop_path_rate": 0,
+    "finetuned": "",
+    "freeze_vit": true,
+    "image_size": 224,
+    "load_finetuned": false,
+    "model_type": "pretrain_opt2.7b",
+    "num_query_token": 32,
+    "opt_model": "facebook/opt-2.7b",
+    "pretrained": "https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained_opt2.7b.pth",
+    "prompt": "",
+    "use_grad_checkpoint": false,
+    "vit_precision": "fp16"
+}
+Using downloaded and verified file: /root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_train.json
+Using downloaded and verified file: /root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_val.json
+Using downloaded and verified file: /root/Documents/DATASETS/MS_COCO/annotations/coco_karpathy_test.json
+2023-05-30 19:21:42,498 [INFO] Building datasets...
+2023-05-30 19:22:07,296 [INFO] freeze vision encoder
+2023-05-30 19:23:13,617 [INFO] load checkpoint from https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained_opt2.7b.pth
+2023-05-30 19:23:13,619 [INFO] dataset_ratios not specified, datasets will be concatenated (map-style datasets) or chained (webdataset.DataPipeline).
+2023-05-30 19:23:13,619 [INFO] Loaded 566747 records for train split from the dataset.
+2023-05-30 19:23:13,619 [INFO] Loaded 5000 records for val split from the dataset.
+2023-05-30 19:23:13,619 [INFO] Loaded 5000 records for test split from the dataset.
+2023-05-30 19:23:13,619 [INFO] Empty train splits.
+2023-05-30 19:23:13,619 [INFO] Empty train splits.
+2023-05-30 19:23:13,619 [INFO] Empty train splits.
+Evaluation  [ 0/79]  eta: 0:06:19    time: 4.8052  data: 1.0905  max mem: 12045
+Evaluation  [10/79]  eta: 0:01:28    time: 1.2848  data: 0.1002  max mem: 12654
+Evaluation  [20/79]  eta: 0:01:04    time: 0.9063  data: 0.0012  max mem: 12654
+Evaluation  [30/79]  eta: 0:00:50    time: 0.8945  data: 0.0012  max mem: 12654
+Evaluation  [40/79]  eta: 0:00:39    time: 0.9100  data: 0.0012  max mem: 12654
+Evaluation  [50/79]  eta: 0:00:28    time: 0.9127  data: 0.0012  max mem: 12654
+Evaluation  [60/79]  eta: 0:00:18    time: 0.9103  data: 0.0012  max mem: 12654
+Evaluation  [70/79]  eta: 0:00:08    time: 0.9293  data: 0.0012  max mem: 12654
+Evaluation  [78/79]  eta: 0:00:00    time: 0.9377  data: 0.0096  max mem: 12654
+Evaluation Total time: 0:01:16 (0.9637 s / it)
+2023-05-30 19:24:35,689 [WARNING] rank 0 starts merging results.
+result file saved to /root/Documents/DEMOS/InstructBLIP/output/BLIP2/Caption_coco/20230530192/result/test_epochbest.json
+Using downloaded and verified file: /root/Documents/CACHE/lavis/coco_gt/coco_karpathy_test_gt.json
+loading annotations into memory...
+Done (t=0.02s)
+creating index...
+index created!
+Loading and preparing results...
+DONE (t=0.01s)
+creating index...
+index created!
+tokenization...
+PTBTokenizer tokenized 307085 tokens at 1253912.85 tokens per second.
+PTBTokenizer tokenized 54757 tokens at 423521.11 tokens per second.
+setting up scorers...
+computing Bleu score...
+{'testlen': 49494, 'reflen': 49042, 'guess': [49494, 44494, 39494, 34494], 'correct': [40029, 24226, 13002, 6615]}
+ratio: 1.0092165898617307
+Bleu_1: 0.809
+Bleu_2: 0.664
+Bleu_3: 0.525
+Bleu_4: 0.408
+computing METEOR score...
+METEOR: 0.307
+computing Rouge score...
+ROUGE_L: 0.600
+computing CIDEr score...
+CIDEr: 1.365
+computing SPICE score...
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.nustaq.serialization.FSTClazzInfo (file:/data/root/anaconda3/envs/lavis/lib/python3.8/site-packages/pycocoevalcap/spice/lib/fst-2.47.jar) to field java.lang.String.value
+WARNING: Please consider reporting this to the maintainers of org.nustaq.serialization.FSTClazzInfo
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+Parsing reference captions
+Parsing test captions
+Initiating Stanford parsing pipeline
+[main] INFO edu.stanford.nlp.pipeline.StanfordCoreNLP - Adding annotator tokenize
+[main] INFO edu.stanford.nlp.pipeline.TokenizerAnnotator - TokenizerAnnotator: No tokenizer type provided. Defaulting to PTBTokenizer.
+[main] INFO edu.stanford.nlp.pipeline.StanfordCoreNLP - Adding annotator ssplit
+[main] INFO edu.stanford.nlp.pipeline.StanfordCoreNLP - Adding annotator parse
+[main] INFO edu.stanford.nlp.parser.common.ParserGrammar - Loading parser from serialized file edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz ... 
+done [0.4 sec].
+[main] INFO edu.stanford.nlp.pipeline.StanfordCoreNLP - Adding annotator lemma
+[main] INFO edu.stanford.nlp.pipeline.StanfordCoreNLP - Adding annotator ner
+Loading classifier from edu/stanford/nlp/models/ner/english.all.3class.distsim.crf.ser.gz ... done [1.0 sec].
+Loading classifier from edu/stanford/nlp/models/ner/english.muc.7class.distsim.crf.ser.gz ... done [0.5 sec].
+Loading classifier from edu/stanford/nlp/models/ner/english.conll.4class.distsim.crf.ser.gz ... done [0.5 sec].
+Threads( StanfordCoreNLP ) [8.906 seconds]
+Warning: Nashorn engine is planned to be removed from a future JDK release
+SPICE evaluation took: 18.29 s
+SPICE: 0.246
+Bleu_1: 0.809
+Bleu_2: 0.664
+Bleu_3: 0.525
+Bleu_4: 0.408
+METEOR: 0.307
+ROUGE_L: 0.600
+CIDEr: 1.365
+SPICE: 0.246
