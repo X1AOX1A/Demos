@@ -58,7 +58,7 @@
 
 ## 0. Image Caption Prompts
 
-- Ref to (image_caption.txt)[./prompts/image_caption.txt]
+- Ref to [image_caption.txt](./prompts/image_caption.txt)
 
 ```
 <Img><ImageHere></Img> Give a short image caption.
