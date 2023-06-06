@@ -145,7 +145,7 @@ bash X1A/eval/caption_coco_zeroshot_vicuna13b.sh
 bash X1A/train/caption_coco_ft_vicuna7b.sh
 ```
 
-- It may take 17.5 hours on 1 40GB A100 GPU.
+- It may take 19 hours on 1 40GB A100 GPU.
 
 - results (id: [20230604165](./output/Caption_coco/finetune/20230604165)):
 
@@ -175,7 +175,7 @@ bash X1A/train/caption_coco_ft_vicuna7b.sh
 bash X1A/train/caption_coco_ft_vicuna13b.sh
 ```
 
-- It may take 32.5 hours on 1 40GB A100 GPU.
+- It may take 35 hours on 1 40GB A100 GPU.
 
 - results (id: [20230604175](./output/Caption_coco/finetune/20230604175)):
 
