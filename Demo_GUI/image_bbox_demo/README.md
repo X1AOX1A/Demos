@@ -1,11 +1,11 @@
-# GUI Demo for Image BBox Annotation
+# GUI Demo Template for Image BBox Annotation
 
-- A GUI demo for image bbox annotation.
+- A GUI demo **template** for image bbox annotation.
 - The GUI is implemented using [streamlit](https://www.streamlit.io/) and [streamlit_drawable_canvas](https://pypi.org/project/streamlit-drawable-canvas/).
 
 ## Features
 
-- Receive image and bounding boxes annotations and text input from user.
+- Receive image, bounding boxes annotations and text input from user.
 
 ![demo](images/example.png)
 
