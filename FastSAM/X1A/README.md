@@ -1,5 +1,21 @@
 # FastSAM
 
+## Prepare environment
+
+```
+git clone https://github.com/CASIA-IVA-Lab/FastSAM.git
+
+cd FastSAM
+conda create -n FastSAM python=3.9
+conda activate FastSAM
+
+# Install the packages
+pip install -r requirements.txt
+
+# Install CLIP
+pip install git+https://github.com/openai/CLIP.git
+```
+
 ## Prepare checkpoint
 
 - Download `default`(`FastSAM`) checkpoint(`FastSAM-x.pt`, YOLOv8x based Segment Anything Model) from [Google Drive](https://drive.google.com/file/d/1m1sjY4ihXBU1fZXdQ-Xdj-mDltW-2Rqv/view?usp=sharing) into `./weights` folder.
